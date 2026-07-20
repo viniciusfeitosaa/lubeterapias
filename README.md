@@ -1,23 +1,44 @@
-# Casa LuBe — Repaginação do site
+# Casa LuBe — Site institucional
 
-Repositório do projeto de **reestruturação e redesign** do site [lubeterapia.com.br](https://lubeterapia.com.br/) (Casa LuBe — clínica de terapias para transtornos do neurodesenvolvimento).
+Rebuild do site [lubeterapia.com.br](https://lubeterapia.com.br/) em **Next.js** (sem WordPress).
+
+## Stack
+
+- Next.js (App Router) + TypeScript + Tailwind CSS v4
+- Framer Motion
+- Conteúdo em JSON (`content/`)
+- Deploy alvo: Vercel
+
+## Desenvolvimento
+
+```bash
+npm install
+npm run dev
+```
+
+Abra [http://localhost:3000](http://localhost:3000).
+
+## Scripts
+
+- `npm run dev` — desenvolvimento
+- `npm run build` — build de produção
+- `npm run start` — servir build
+- `npm run lint` — ESLint
 
 ## Documentação
 
 | Documento | Descrição |
 |-----------|-----------|
-| [Spec de design](docs/superpowers/specs/2026-07-20-lube-repaginacao-design.md) | Diagnóstico do site atual, direção visual, 3D, IA, stack e fases |
-| [Plano de implementação](docs/superpowers/plans/2026-07-20-lube-repaginacao.md) | Tasks executáveis (Task 0–9) com arquivos, código e commits |
+| [Spec de design](docs/superpowers/specs/2026-07-20-lube-repaginacao-design.md) | Direção visual, 3D, fases |
+| [Plano de implementação](docs/superpowers/plans/2026-07-20-lube-repaginacao.md) | Tasks 0–9 |
+| [Migração](docs/ops/migracao-conteudo.md) | Exportação e cutover |
 
-## Decisão técnica (confirmada)
+## Rotas
 
-**Abordagem C — Next.js puro.** Sem WordPress, Elementor ou plugins WP.
-
-- 3D: React Three Fiber  
-- Animações: Framer Motion / GSAP  
-- Conteúdo: MDX/JSON no repo (CMS moderno opcional depois)  
-- Go-live: Vercel + redirects 301 + descomissionar o WP antigo
-
-## Conteúdo legado
-
-O site WordPress atual é só **fonte de exportação** (textos/imagens). A página `/contato/` antiga está comprometida e **não** será migrada.
+- `/` Home
+- `/sobre` Quem somos
+- `/estrutura` Salas
+- `/especialidades` e `/especialidades/[slug]`
+- `/unidades` Fortaleza e Eusébio
+- `/contato` (novo, sem legado WP)
+- `/politica-de-privacidade`

@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "espaco-crescer",
+    "title": "Espaço Crescer",
+    "specialty": "Terapia Ocupacional",
+    "summary": "Ambiente para autonomia, coordenação motora e habilidades funcionais do dia a dia."
+  },
+  {
+    "slug": "espaco-flutuar",
+    "title": "Espaço Flutuar",
+    "specialty": "Natação",
+    "summary": "Piscina terapêutica aquecida para equilíbrio, coordenação e integração sensorial."
+  },
+  {
+    "slug": "sala-acolher",
+    "title": "Sala Acolher",
+    "specialty": "Psicologia",
+    "summary": "Espaço sensível para escuta terapêutica e competências socioemocionais."
+  },
+  {
+    "slug": "sala-comunicar",
+    "title": "Sala Comunicar",
+    "specialty": "Fonoaudiologia",
+    "summary": "Desenvolvimento da linguagem, comunicação e alimentação com estímulos lúdicos."
+  },
+  {
+    "slug": "sala-de-acolhimento",
+    "title": "Sala de Acolhimento",
+    "specialty": "Acolhimento",
+    "summary": "Ambiente neutro para adaptação antes ou após os atendimentos."
+  },
+  {
+    "slug": "sala-desenvolver",
+    "title": "Sala Desenvolver",
+    "specialty": "Psicopedagogia",
+    "summary": "Recursos didáticos para o processo de aprendizagem e desenvolvimento cognitivo."
+  },
+  {
+    "slug": "sala-evoluir",
+    "title": "Sala Evoluir",
+    "specialty": "Neuropediatria",
+    "summary": "Avaliações médicas especializadas com conforto e atenção individualizada."
+  },
+  {
+    "slug": "sala-humanescer",
+    "title": "Sala Humanescer",
+    "specialty": "Musicoterapia",
+    "summary": "Instrumentos e recursos musicais para expressão emocional e socialização."
+  },
+  {
+    "slug": "sala-reabilitar",
+    "title": "Sala Reabilitar",
+    "specialty": "Fisioterapia",
+    "summary": "Estrutura para fortalecer o corpo, coordenação e independência física."
+  },
+  {
+    "slug": "recepcao",
+    "title": "Recepção",
+    "specialty": "Recepção",
+    "summary": "Ambiente acolhedor e lúdico para receber famílias com carinho e conforto."
+  }
+]

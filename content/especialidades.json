@@ -1,0 +1,67 @@
+[
+  {
+    "slug": "psicomotricidade",
+    "title": "Psicomotricidade",
+    "summary": "Desenvolvimento motor e emocional, melhorando coordenação e equilíbrio."
+  },
+  {
+    "slug": "neuropediatria",
+    "title": "Neuropediatria",
+    "summary": "Cuidado de distúrbios neurológicos infantis com olhar para o desenvolvimento integral."
+  },
+  {
+    "slug": "pediatra",
+    "title": "Pediatria",
+    "summary": "Saúde física, mental e emocional desde o nascimento até a adolescência."
+  },
+  {
+    "slug": "psicoterapia-para-pais",
+    "title": "Psicoterapia para pais",
+    "summary": "Apoio e orientação para fortalecer a dinâmica familiar e o bem-estar das crianças."
+  },
+  {
+    "slug": "natacao",
+    "title": "Natação",
+    "summary": "Atividades aquáticas que promovem segurança, saúde física e diversão com propósito."
+  },
+  {
+    "slug": "funcional-kids",
+    "title": "Funcional Kids",
+    "summary": "Atividades físicas adaptadas para força, flexibilidade e saúde."
+  },
+  {
+    "slug": "fonoaudiologia",
+    "title": "Fonoaudiologia",
+    "summary": "Prevenção e tratamento de distúrbios da comunicação oral e escrita."
+  },
+  {
+    "slug": "estimulacao-precoce",
+    "title": "Estimulação Precoce",
+    "summary": "Estímulos para o desenvolvimento cognitivo e motor de bebês e crianças pequenas."
+  },
+  {
+    "slug": "musicoterapia",
+    "title": "Musicoterapia",
+    "summary": "Música como caminho para comunicação, expressão, aprendizado e bem-estar emocional."
+  },
+  {
+    "slug": "terapia-aba",
+    "title": "Terapia ABA",
+    "summary": "Técnicas comportamentais para habilidades sociais, comunicação e aprendizado."
+  },
+  {
+    "slug": "terapia-ocupacional-infantil",
+    "title": "Terapia Ocupacional",
+    "summary": "Autonomia nas atividades do dia a dia com segurança e criatividade."
+  },
+  {
+    "slug": "nutricao",
+    "title": "Consulta Nutricional",
+    "summary": "Orientação alimentar para crescimento e desenvolvimento saudáveis."
+  },
+  {
+    "slug": "judo",
+    "title": "Judô",
+    "summary": "Prática esportiva adaptada que estimula disciplina, coordenação e autoconfiança."
+  }
+]

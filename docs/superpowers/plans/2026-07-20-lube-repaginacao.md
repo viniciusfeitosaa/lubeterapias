@@ -352,7 +352,7 @@ git commit -m "feat: seções da home Casa LuBe (2D)"
 - Create: páginas `especialidades/page.tsx`, `especialidades/[slug]/page.tsx`, `estrutura/page.tsx`, `sobre/page.tsx`
 
 **Interfaces:**
-- Consumes: textos migrados do WP
+- Consumes: content MDX/JSON (stubs ok) exportado na Task 0
 - Produces: `getEspecialidades()`, `getEspecialidade(slug)`, `getSalas()`
 
 Lista de slugs a migrar:
@@ -363,7 +363,7 @@ natacao, funcional-kids, fonoaudiologia, estimulacao-precoce,
 musicoterapia, terapia-aba, terapia-ocupacional-infantil, nutricao, judo
 ```
 
-- [ ] **Step 1: Exportar copy do WP** e corrigir o texto errado de Judô (hoje copia nutrição).
+- [ ] **Step 1: Limpar copy de `content/_raw/`** e corrigir o texto errado de Judô (no site antigo copia nutrição).
 - [ ] **Step 2: Schema frontmatter MDX**
 
 ```md
@@ -462,7 +462,7 @@ git commit -m "feat: ícones 3D em especialidades e tour de estrutura"
 - Consumes: `site.json`, Server Action
 - Produces: formulário funcional + links WhatsApp + mapas
 
-- [ ] **Step 1: Página Contato** — sem nenhum HTML do WP atual.
+- [ ] **Step 1: Página Contato** — escrita do zero no Next.js (não reutilizar HTML do site antigo).
 - [ ] **Step 2: Form** — nome, telefone, unidade de interesse, mensagem; honeypot; Server Action envia email ou abre WhatsApp com texto pré-preenchido.
 - [ ] **Step 3: Unidades** — duas LocalBusiness cards + embeds de mapa.
 - [ ] **Step 4: Commit**
@@ -480,7 +480,7 @@ git commit -m "feat: páginas Contato e Unidades reconstruídas"
 - Create: `src/components/ConsentBanner.tsx`
 - Create: `src/app/politica-de-privacidade/page.tsx`
 
-- [ ] **Step 1: Migrar posts do WP** (export WXR → MDX) ou link temporário ao blog antigo.
+- [ ] **Step 1: Migrar posts do blog** de `content/_raw/` → MDX em `content/blog/` (não manter link para blog WordPress).
 - [ ] **Step 2: Redirects em `next.config.ts`**
 
 ```ts
@@ -509,8 +509,8 @@ git commit -m "feat: SEO, redirects, LGPD e preparo de go-live"
 ## Ordem de execução sugerida
 
 ```
-Task 0 (segurança WP)  →  em paralelo com Task 1–2
-Task 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9
+Task 0 (exportação única)  →  em paralelo com Task 1–2
+Task 1 → 2 → 3 → 4 → 5 → 6 → 7 → 8 → 9 (cutover + desligar WP)
 ```
 
 Não iniciar Task 6 (3D) antes do hero 2D estar aprovado visualmente.
@@ -530,5 +530,6 @@ Não iniciar Task 6 (3D) antes do hero 2D estar aprovado visualmente.
 | Especialidades + Sobre + Estrutura | Task 5 |
 | SEO / redirects / LGPD | Task 9 |
 | Performance mobile com 3D | Task 6 Steps 2–4 |
+| Zero WordPress em produção | Task 0 checklist + Task 9 cutover |
 
-Sem placeholders TBD nas tasks; decisões de stack e slugs estão explícitas.
+Sem placeholders TBD nas tasks; decisões de stack e slugs estão explícitas. **WP fora do stack.**
