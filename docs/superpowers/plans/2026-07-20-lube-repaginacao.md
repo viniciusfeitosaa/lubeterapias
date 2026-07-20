@@ -2,11 +2,11 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Reconstruir o site da Casa LuBe (lubeterapia.com.br) em Next.js com design inovador, itens 3D, animações e conversão via WhatsApp, migrando o conteúdo útil do WordPress/Elementor atual.
+**Goal:** Reconstruir o site da Casa LuBe (lubeterapia.com.br) em Next.js com design inovador, itens 3D, animações e conversão via WhatsApp — **sem WordPress**. Conteúdo útil do site antigo é exportado uma vez para MDX/JSON.
 
-**Architecture:** Next.js App Router + TypeScript + Tailwind (tokens de marca) + Framer Motion/GSAP + React Three Fiber. Conteúdo inicial em MDX/JSON; Contato e Unidades reconstruídos do zero. Redirects 301 preservam SEO das URLs WordPress.
+**Architecture:** Next.js App Router + TypeScript + Tailwind (tokens de marca) + Framer Motion/GSAP + React Three Fiber. Conteúdo 100% no repo (MDX/JSON) ou CMS moderno opcional depois. Contato e Unidades do zero. Redirects 301 preservam SEO das URLs antigas. Após go-live, WordPress é descomissionado.
 
-**Tech Stack:** Next.js 15, React 19, TypeScript, Tailwind CSS v4, Framer Motion, GSAP, `@react-three/fiber`, `@react-three/drei`, MDX, Vercel.
+**Tech Stack:** Next.js 15, React 19, TypeScript, Tailwind CSS v4, Framer Motion, GSAP, `@react-three/fiber`, `@react-three/drei`, MDX, Vercel. **Não usar:** WordPress, Elementor, plugins WP.
 
 **Spec de referência:** `docs/superpowers/specs/2026-07-20-lube-repaginacao-design.md`
 
@@ -19,8 +19,9 @@
 - Hero: full-bleed; sem cards; sem overlays flutuantes; sem stats no first viewport
 - CTA primário: WhatsApp (`5585991536550` Fortaleza, `5585992519181` Eusébio)
 - Respeitar `prefers-reduced-motion`
-- Página Contato atual está **comprometida** — não migrar HTML dela; reconstruir
-- Não redesenhar o logo nesta fase — reutilizar assets oficiais existentes
+- Página Contato antiga está **comprometida** — não migrar HTML; reconstruir no Next.js
+- **Stack sem WordPress:** nenhum plugin, tema, REST WP ou headless WP
+- Não redesenhar o logo nesta fase — reutilizar assets oficiais exportados do site antigo
 
 ---
 
@@ -70,42 +71,54 @@
 
 ---
 
-### Task 0: Segurança urgente (WordPress em produção)
+### Task 0: Exportação única do site antigo + prep de descomissionamento
 
 **Files:**
-- Operação no painel WP (não no repo): despublicar `/contato/`
-- Create: `docs/ops/incidente-contato.md` (registro do que foi feito)
+- Create: `docs/ops/migracao-conteudo.md`
+- Create: `public/brand/` (logo, favicon baixados)
+- Create: `content/_raw/` (textos brutos exportados; depois limpos em MDX)
 
 **Interfaces:**
-- Consumes: nenhuma
-- Produces: Contato offline ou página placeholder segura no WP até o cutover
+- Consumes: site antigo apenas como leitura/download
+- Produces: inventário de copy + assets no repo; checklist para desligar WP no go-live
 
-- [ ] **Step 1: Despublicar ou substituir Contato no WP**
+- [ ] **Step 1: Exportar assets de marca**
 
-No WordPress admin → Páginas → Contato → mover para Rascunho **ou** substituir o conteúdo Elementor por um bloco HTML mínimo:
+Baixar do site antigo (ou pasta da clínica) e salvar em `public/brand/`:
+- Logo colorido e versão com borda branca
+- Favicon / apple-touch-icon
+- Fotos do hero, sobre e salas (WebP quando possível)
 
-```html
-<section>
-  <h1>Fale com a Casa LuBe</h1>
-  <p>Atendimento via WhatsApp:</p>
-  <p><a href="https://api.whatsapp.com/send?phone=5585991536550">Fortaleza — (85) 99153-6550</a></p>
-  <p><a href="https://api.whatsapp.com/send?phone=5585992519181">Eusébio — (85) 99251-9181</a></p>
-</section>
+- [ ] **Step 2: Extrair copy útil (sem Contato)**
+
+Registrar em `docs/ops/migracao-conteudo.md` e/ou `content/_raw/`:
+- Textos da home, sobre, missão/visão/valores
+- 13 especialidades (corrigir copy do Judô na hora da limpeza)
+- Salas da estrutura + link do vídeo de tour
+- Dados das 2 unidades (endereços, WhatsApp, horários)
+- Posts do blog que valem a pena migrar (lista + Markdown)
+
+**Não** copiar HTML/JS/CSS do Contato comprometido.
+
+- [ ] **Step 3: Checklist de desligamento do WP (executar só no go-live)**
+
+Incluir em `docs/ops/migracao-conteudo.md`:
+
+```markdown
+## Cutover (após Next.js estável)
+- [ ] DNS A/CNAME → Vercel
+- [ ] Redirects 301 ativos (sobre-nos → /sobre, etc.)
+- [ ] GTM/GA4 no Next.js (sem Site Kit WP)
+- [ ] Validar Contato, WhatsApp, mapas
+- [ ] Cancelar hosting WordPress / Elementor / plugins
+- [ ] Revogar acessos admin do WP antigo
 ```
 
-- [ ] **Step 2: Rodar scan de malware / trocar senhas admin / revisar usuários**
-
-Checklist mínimo: plugins desatualizados, usuários desconhecidos, `wp-content/uploads` com PHP suspeito, file integrity (Wordfence ou similar).
-
-- [ ] **Step 3: Registrar incidente**
-
-Criar `docs/ops/incidente-contato.md` com data, o que foi encontrado, ações tomadas.
-
-- [ ] **Step 4: Commit do registro**
+- [ ] **Step 4: Commit do inventário**
 
 ```bash
-git add docs/ops/incidente-contato.md
-git commit -m "docs: registrar incidente e remediação da página Contato"
+git add docs/ops/migracao-conteudo.md public/brand content/_raw
+git commit -m "docs: inventário de migração sem dependência de WordPress"
 ```
 
 ---

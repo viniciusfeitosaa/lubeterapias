@@ -9,10 +9,15 @@ Repositório do projeto de **reestruturação e redesign** do site [lubeterapia.
 | [Spec de design](docs/superpowers/specs/2026-07-20-lube-repaginacao-design.md) | Diagnóstico do site atual, direção visual, 3D, IA, stack e fases |
 | [Plano de implementação](docs/superpowers/plans/2026-07-20-lube-repaginacao.md) | Tasks executáveis (Task 0–9) com arquivos, código e commits |
 
-## Decisão técnica (resumo)
+## Decisão técnica (confirmada)
 
-Rebuild em **Next.js** (não Elementor), com **React Three Fiber** para 3D, **Framer Motion/GSAP** para animações, conteúdo em MDX/JSON e cutover com redirects 301.
+**Abordagem C — Next.js puro.** Sem WordPress, Elementor ou plugins WP.
 
-## Alerta
+- 3D: React Three Fiber  
+- Animações: Framer Motion / GSAP  
+- Conteúdo: MDX/JSON no repo (CMS moderno opcional depois)  
+- Go-live: Vercel + redirects 301 + descomissionar o WP antigo
 
-A página `/contato/` do WordPress atual aparece **comprometida** (conteúdo spam externo). O plano começa pela remediação urgente (Task 0).
+## Conteúdo legado
+
+O site WordPress atual é só **fonte de exportação** (textos/imagens). A página `/contato/` antiga está comprometida e **não** será migrada.

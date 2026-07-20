@@ -59,21 +59,21 @@
 ## 3. Abordagens avaliadas
 
 ### A — Redesign no Elementor + CSS/JS custom
-- **Prós:** time atual já conhece WP; conteúdo no lugar.
-- **Contras:** 3D/animações avançadas lutam contra o builder; performance continua frágil; design inovador limitado.
-- **Veredito:** inadequado para o nível visual pedido.
+- **Veredito:** rejeitada — inadequada para 3D/animações e mantém dependência de WP.
 
 ### B — WordPress headless + Next.js
-- **Prós:** CMS familiar para conteúdo (blog, especialidades); frontend livre.
-- **Contras:** complexidade de sync, hosting dual, custo de manutenção.
-- **Veredito:** bom se a equipe precisar editar blog com frequência no WP.
+- **Veredito:** rejeitada — ainda depende de WordPress como CMS/backend.
 
-### C — Rebuild Next.js App Router + CMS leve (recomendado)
-- **Prós:** controle total de design, 3D (React Three Fiber), animações (GSAP/Framer Motion), performance, tipografia e motion system; Contato limpo.
-- **Contras:** migração de conteúdo; curva para editores (mitigada com Sanity/Decap ou MDX).
-- **Veredito:** **recomendado** — melhor equilíbrio entre inovação visual e manutenção.
+### C — Rebuild Next.js App Router + conteúdo no próprio repo/CMS leve
+- **Prós:** controle total de design, 3D (React Three Fiber), animações (GSAP/Framer Motion), performance, tipografia e motion system; Contato limpo; zero dependência de WP.
+- **Contras:** migração única de conteúdo; editores passam a usar MDX/CMS moderno (Sanity/Decap opcional).
+- **Veredito:** **aprovada**.
 
-**Decisão desta spec:** Abordagem **C**.
+### Decisão confirmada (2026-07-20)
+
+**Abordagem C.** O site novo **não utiliza WordPress nem ferramentas do ecossistema WP** (Elementor, WP Rocket, Joinchat, Inavii, Complianz WP, etc.).
+
+O WordPress atual serve apenas como **fonte histórica de conteúdo/assets** para uma exportação única. Após o go-live no Next.js + DNS, o WP é **descomissionado** (hosting, plugins, painel).
 
 ---
 
@@ -195,12 +195,18 @@ apps/web (Next.js 15 App Router + TypeScript)
 | Analytics | GTM + Consent mode (LGPD) |
 | Hosting | Vercel (ou similar) + domínio atual |
 
-### Integrações a migrar
-- WhatsApp Joinchat → botão nativo sticky + CTAs
-- Instagram → Graph API ou bloco estático curado
+### Integrações (substitutos nativos — sem plugins WP)
+- WhatsApp → botão sticky + CTAs nativos (`api.whatsapp.com`)
+- Instagram → Graph API ou grid estático curado em `content/`
 - Google Maps → embed limpo nas unidades
-- Complianz → banner de cookies próprio ou Cookiebot
-- Blog WP → export Markdown/MDX
+- Cookies/LGPD → banner próprio no Next.js (Consent Mode + GTM)
+- Blog → posts em MDX no repo (Sanity opcional depois, se a clínica pedir editor visual)
+- Analytics → GTM/GA4 direto no Next.js
+
+### O que NÃO entra no stack
+- WordPress, Elementor, temas WP, plugins WP
+- Headless WP / WP REST como backend
+- Formulários Contato Form 7 / Elementor Forms
 
 ---
 
@@ -226,12 +232,13 @@ apps/web (Next.js 15 App Router + TypeScript)
 
 ## 9. Fases de entrega
 
-### Fase 0 — Segurança e inventário
-- Remover/despublicar página Contato comprometida no WP imediatamente
-- Exportar textos, imagens e lista de especialidades/salas
-- Inventário de assets de marca (logo, cores oficiais se houver brandbook)
+### Fase 0 — Exportação única e desligamento do WP
+- Baixar textos, imagens, logo e lista de especialidades/salas do site antigo (scrape/export manual)
+- **Não** migrar a página Contato comprometida — reescrever do zero
+- Inventário de assets de marca
+- Planejar descomissionamento: DNS → Vercel, cancelar hosting WP após estabilizar
 
-### Fase 1 — Fundação
+### Fase 1 — Fundação (Next.js only)
 - Scaffold Next.js + design tokens + tipografia + Header/Footer
 - Home estática com hero full-bleed (foto) e motion 2D
 
@@ -242,11 +249,11 @@ apps/web (Next.js 15 App Router + TypeScript)
 - Unidades + Contato limpo
 
 ### Fase 3 — Conteúdo vivo e go-live
-- Blog migrado
+- Blog em MDX
 - Instagram
-- Redirects 301 + GTM + cookies
+- Redirects 301 + GTM + cookies nativos
 - Lighthouse / a11y / QA mobile
-- Cutover DNS
+- Cutover DNS + desligar WordPress
 
 ---
 
@@ -256,6 +263,7 @@ apps/web (Next.js 15 App Router + TypeScript)
 - E-commerce
 - Multilíngue
 - Redesign de identidade visual completa (logo novo) — reusar logo atual
+- Qualquer continuidade de WordPress (headless, preview WP, plugins)
 
 ---
 
@@ -265,9 +273,9 @@ apps/web (Next.js 15 App Router + TypeScript)
 |-------|-----------|
 | 3D pesado no mobile | LOD, pause offscreen, fallback 2D |
 | Famílias com sensibilidade sensorial | reduced-motion, contraste controlado, sem flashes |
-| Contato hackeado | página nova + limpeza WP + scan malware |
-| Conteúdo desatualizado no Judô (copy errada no site atual) | revisão editorial na migração |
-| Dependência de editores WP | CMS leve na fase 2 se necessário |
+| Contato hackeado no site antigo | página nova no Next.js; WP desligado após cutover |
+| Conteúdo desatualizado no Judô (copy errada no site atual) | revisão editorial na migração para MDX |
+| Edição de conteúdo sem WP | MDX no repo na fase 1; Sanity/Decap opcional depois |
 
 ---
 
@@ -282,3 +290,4 @@ apps/web (Next.js 15 App Router + TypeScript)
 - [ ] Lighthouse Performance ≥ 85 mobile (com 3D lazy)
 - [ ] Redirects das URLs antigas funcionando
 - [ ] LGPD / consentimento operante
+- [ ] Zero dependência de WordPress em produção após cutover
