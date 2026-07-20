@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { getEspecialidade, getEspecialidades, getSite } from "@/lib/content";
-import { DEFAULT_WA_TEXT, whatsappHref } from "@/lib/whatsapp";
+import { whatsappHref } from "@/lib/whatsapp";
 
 type Props = { params: Promise<{ slug: string }> };
 
