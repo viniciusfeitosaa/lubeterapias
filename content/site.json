@@ -1,0 +1,36 @@
+{
+  "brand": {
+    "name": "Casa LuBe",
+    "tagline": "Espaço lúdico e de bem-estar",
+    "legalName": "Lube Terapia",
+    "group": "Coaph",
+    "instagram": "https://www.instagram.com/lubeterapias/",
+    "facebook": "https://www.facebook.com/profile.php?id=61554156766468"
+  },
+  "mission": "Proporcionar atendimento especializado e humanizado a pessoas com transtornos de neurodesenvolvimento, promovendo autonomia e qualidade de vida de pacientes e suas famílias por meio de uma abordagem multidisciplinar, inovadora e baseada em evidências.",
+  "vision": "Ser reconhecido como referência nacional em atendimento e terapias para pessoas com transtornos de neurodesenvolvimento.",
+  "values": "Empatia, humanização, excelência, qualidade, inclusão, diversidade, transparência, inovação e responsabilidade social.",
+  "about": "Somos uma Clínica de Terapias para os Transtornos do Neurodesenvolvimento, uma empresa do grupo Coaph. Nosso espaço foi estudado, desenvolvido e criado de forma lúdica e funcional, com uma equipe multidisciplinar preparada para acolher, desenvolver e incluir.",
+  "units": [
+    {
+      "id": "fortaleza",
+      "city": "Fortaleza",
+      "phoneDisplay": "(85) 99153-6550",
+      "whatsapp": "5585991536550",
+      "address": "Rua Marcondes Pereira, 931 — Joaquim Távora, Fortaleza-CE",
+      "hours": "Seg–Sex 8h–18h",
+      "mapsUrl": "https://maps.app.goo.gl/zv32Cqo7BbiTHdpV6",
+      "mapsEmbed": "https://maps.google.com/maps?q=R.%20Marcondes%20Pereira%2C%20931%20-%20Joaquim%20T%C3%A1vora%20(Fortaleza)&t=m&z=15&output=embed&iwloc=near"
+    },
+    {
+      "id": "eusebio",
+      "city": "Eusébio",
+      "phoneDisplay": "(85) 99251-9181",
+      "whatsapp": "5585992519181",
+      "address": "Av. Eusébio de Queiroz, 1890 — Tamatanduba, Eusébio-CE",
+      "hours": "Seg–Sex 8h–18h",
+      "mapsUrl": "https://maps.app.goo.gl/zv32Cqo7BbiTHdpV6",
+      "mapsEmbed": "https://maps.google.com/maps?q=Av.%20Eus%C3%A9bio%20de%20Queiroz%2C%201890%20-%20Tamatanduba%2C%20Eus%C3%A9bio&t=m&z=15&output=embed&iwloc=near"
+    }
+  ]
+}

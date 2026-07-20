@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+:root {
+  --lube-sky: #7ec8e3;
+  --lube-teal: #2a9d8f;
+  --lube-leaf: #8fbf6a;
+  --lube-sun: #f4c95d;
+  --lube-coral: #f28482;
+  --lube-ink: #1e3a4c;
+  --lube-mist: #f0f7fa;
+  --lube-foam: #ffffff;
+  --background: var(--lube-mist);
+  --foreground: var(--lube-ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-lube-sky: var(--lube-sky);
+  --color-lube-teal: var(--lube-teal);
+  --color-lube-leaf: var(--lube-leaf);
+  --color-lube-sun: var(--lube-sun);
+  --color-lube-coral: var(--lube-coral);
+  --color-lube-ink: var(--lube-ink);
+  --color-lube-mist: var(--lube-mist);
+  --color-lube-foam: var(--lube-foam);
+  --font-brand: var(--font-baloo);
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-nunito);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--lube-mist);
+  color: var(--lube-ink);
+  font-family: var(--font-nunito), system-ui, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--lube-sky) 45%, white);
+  color: var(--lube-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
