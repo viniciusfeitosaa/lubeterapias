@@ -39,6 +39,6 @@ Abra [http://localhost:3000](http://localhost:3000).
 - `/sobre` Quem somos
 - `/estrutura` Salas
 - `/especialidades` e `/especialidades/[slug]`
-- `/unidades` Fortaleza e Eusébio
-- `/contato` (novo, sem legado WP)
+- `/contato` unidade (Fortaleza) + formulário
+- `/unidades` redireciona para `/contato`
 - `/politica-de-privacidade`

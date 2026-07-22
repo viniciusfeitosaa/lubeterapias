@@ -1,8 +1,13 @@
+import { ArchedEyebrow } from "@/components/ui/ArchedEyebrow";
+
 type SectionHeadingProps = {
   eyebrow?: string;
   title: string;
   description?: string;
   light?: boolean;
+  align?: "center" | "left";
+  /** Default: arco no centro; false mantém texto reto (ex.: Sobre nós). */
+  arched?: boolean;
 };
 
 export function SectionHeading({
@@ -10,20 +15,29 @@ export function SectionHeading({
   title,
   description,
   light = false,
+  align = "center",
+  arched,
 }: SectionHeadingProps) {
+  const alignClass = align === "left" ? "text-left mx-0" : "mx-auto text-center";
+  const useArch = arched ?? align === "center";
+
   return (
-    <div className="mx-auto max-w-3xl text-center">
+    <div className={`max-w-3xl ${alignClass}`}>
       {eyebrow ? (
-        <p
-          className={`mb-3 font-[family-name:var(--font-baloo)] text-sm font-semibold tracking-wide uppercase ${
-            light ? "text-white/80" : "text-lube-teal"
-          }`}
-        >
-          {eyebrow}
-        </p>
+        useArch ? (
+          <ArchedEyebrow light={light}>{eyebrow}</ArchedEyebrow>
+        ) : (
+          <p
+            className={`lube-eyebrow mb-3 ${
+              light ? "!text-white/85" : ""
+            }`}
+          >
+            {eyebrow}
+          </p>
+        )
       ) : null}
       <h2
-        className={`font-[family-name:var(--font-fraunces)] text-3xl leading-tight md:text-4xl ${
+        className={`font-display text-3xl leading-[1.15] md:text-4xl lg:text-[2.75rem] ${
           light ? "text-white" : "text-lube-ink"
         }`}
       >
@@ -32,7 +46,7 @@ export function SectionHeading({
       {description ? (
         <p
           className={`mt-4 text-base leading-relaxed md:text-lg ${
-            light ? "text-white/85" : "text-lube-ink/75"
+            light ? "text-white/88" : "text-lube-ink-soft"
           }`}
         >
           {description}

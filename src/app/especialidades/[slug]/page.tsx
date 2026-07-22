@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
-import { getEspecialidade, getEspecialidades, getSite } from "@/lib/content";
+import { PageHero } from "@/components/ui/PageHero";
+import {
+  getEspecialidade,
+  getEspecialidades,
+  getSite,
+  SPECIALTY_CATEGORY_LABELS,
+} from "@/lib/content";
+import { getServiceImage } from "@/lib/images";
 import { whatsappHref } from "@/lib/whatsapp";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -14,7 +21,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const item = getEspecialidade(slug);
-  if (!item) return { title: "Especialidade" };
+  if (!item) return { title: "Serviço" };
   return { title: item.title, description: item.summary };
 }
 
@@ -24,40 +31,51 @@ export default async function EspecialidadePage({ params }: Props) {
   if (!item) notFound();
 
   const site = getSite();
+  const img = getServiceImage(item.slug);
   const wa = whatsappHref(
     site.units[0].whatsapp,
     `Olá! Vim do site e gostaria de saber mais sobre ${item.title} na Casa LuBe.`,
   );
 
   return (
-    <main className="py-16 md:py-24">
-      <div className="mx-auto max-w-3xl px-4 md:px-6">
-        <Link
-          href="/especialidades"
-          className="text-sm font-semibold text-lube-teal hover:underline"
-        >
-          ← Todas as especialidades
-        </Link>
-        <h1 className="mt-6 font-[family-name:var(--font-fraunces)] text-4xl text-lube-ink md:text-5xl">
-          {item.title}
-        </h1>
-        <p className="mt-6 text-lg leading-relaxed text-lube-ink/80">
-          {item.summary}
-        </p>
-        <p className="mt-4 leading-relaxed text-lube-ink/70">
-          Na Casa LuBe, cada atendimento é personalizado pela nossa equipe
-          multidisciplinar, em ambientes lúdicos e seguros. Fale conosco para
-          entender o melhor caminho para sua família.
-        </p>
-        <div className="mt-10 flex flex-wrap gap-3">
-          <Button href={wa} external>
-            Falar no WhatsApp
-          </Button>
-          <Button href="/contato" variant="ghost">
-            Ir para contato
-          </Button>
+    <main>
+      <PageHero
+        eyebrow={SPECIALTY_CATEGORY_LABELS[item.category]}
+        title={item.title}
+        description={item.summary}
+        backHref="/especialidades"
+        backLabel="Todos os serviços"
+        toys="especialidades"
+      />
+
+      <section className="lube-shell max-w-3xl space-y-6 py-14 md:py-20">
+        <div className="relative aspect-[16/9] overflow-hidden rounded-[1.5rem] border border-lube-ink/8 shadow-[var(--shadow-soft)]">
+          <Image
+            src={img.src}
+            alt={img.alt}
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, 768px"
+            priority
+          />
         </div>
-      </div>
+
+        <div className="lube-card p-6 md:p-8">
+          <p className="leading-relaxed text-lube-ink-soft">
+            Na Casa LuBe, cada atendimento é personalizado pela nossa equipe
+            multidisciplinar, em ambientes lúdicos e seguros. Fale conosco para
+            entender o melhor caminho para sua família.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button href={wa} external variant="wa">
+              Falar no WhatsApp
+            </Button>
+            <Button href="/contato" variant="secondary">
+              Ir para contato
+            </Button>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

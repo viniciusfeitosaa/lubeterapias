@@ -1,67 +1,92 @@
 [
   {
-    "slug": "psicomotricidade",
-    "title": "Psicomotricidade",
-    "summary": "Desenvolvimento motor e emocional, melhorando coordenação e equilíbrio."
-  },
-  {
-    "slug": "neuropediatria",
-    "title": "Neuropediatria",
-    "summary": "Cuidado de distúrbios neurológicos infantis com olhar para o desenvolvimento integral."
-  },
-  {
-    "slug": "pediatra",
-    "title": "Pediatria",
-    "summary": "Saúde física, mental e emocional desde o nascimento até a adolescência."
-  },
-  {
-    "slug": "psicoterapia-para-pais",
-    "title": "Psicoterapia para pais",
-    "summary": "Apoio e orientação para fortalecer a dinâmica familiar e o bem-estar das crianças."
-  },
-  {
-    "slug": "natacao",
-    "title": "Natação",
-    "summary": "Atividades aquáticas que promovem segurança, saúde física e diversão com propósito."
-  },
-  {
-    "slug": "funcional-kids",
-    "title": "Funcional Kids",
-    "summary": "Atividades físicas adaptadas para força, flexibilidade e saúde."
-  },
-  {
-    "slug": "fonoaudiologia",
-    "title": "Fonoaudiologia",
-    "summary": "Prevenção e tratamento de distúrbios da comunicação oral e escrita."
-  },
-  {
-    "slug": "estimulacao-precoce",
-    "title": "Estimulação Precoce",
-    "summary": "Estímulos para o desenvolvimento cognitivo e motor de bebês e crianças pequenas."
-  },
-  {
-    "slug": "musicoterapia",
-    "title": "Musicoterapia",
-    "summary": "Música como caminho para comunicação, expressão, aprendizado e bem-estar emocional."
+    "slug": "psicoterapia",
+    "title": "Psicoterapia",
+    "category": "especialidades",
+    "summary": "Acompanhamento psicológico para crianças e famílias, com escuta acolhedora e estratégias para o desenvolvimento emocional."
   },
   {
     "slug": "terapia-aba",
     "title": "Terapia ABA",
-    "summary": "Técnicas comportamentais para habilidades sociais, comunicação e aprendizado."
+    "category": "especialidades",
+    "summary": "Intervenção comportamental baseada em evidências para comunicação, habilidades sociais e aprendizagem."
   },
   {
-    "slug": "terapia-ocupacional-infantil",
+    "slug": "terapia-ocupacional",
     "title": "Terapia Ocupacional",
-    "summary": "Autonomia nas atividades do dia a dia com segurança e criatividade."
+    "category": "especialidades",
+    "summary": "Autonomia nas atividades do dia a dia, integração sensorial e habilidades funcionais com segurança e criatividade."
+  },
+  {
+    "slug": "estimulacao-precoce",
+    "title": "Estimulação Precoce",
+    "category": "especialidades",
+    "summary": "Estímulos para o desenvolvimento cognitivo, motor e afetivo de bebês e crianças pequenas."
+  },
+  {
+    "slug": "fonoaudiologia",
+    "title": "Fonoaudiologia",
+    "category": "especialidades",
+    "summary": "Prevenção e tratamento de distúrbios da comunicação oral e escrita, linguagem e fala."
+  },
+  {
+    "slug": "fisioterapia",
+    "title": "Fisioterapia",
+    "category": "especialidades",
+    "summary": "Fortalecimento, coordenação e independência física com acompanhamento especializado."
+  },
+  {
+    "slug": "psicopedagogia",
+    "title": "Psicopedagogia",
+    "category": "especialidades",
+    "summary": "Apoio aos processos de aprendizagem e desenvolvimento cognitivo com recursos didáticos lúdicos."
+  },
+  {
+    "slug": "psicomotricidade",
+    "title": "Psicomotricidade",
+    "category": "especialidades",
+    "summary": "Desenvolvimento motor e emocional, melhorando coordenação, equilíbrio e expressão corporal."
   },
   {
     "slug": "nutricao",
-    "title": "Consulta Nutricional",
-    "summary": "Orientação alimentar para crescimento e desenvolvimento saudáveis."
+    "title": "Nutrição",
+    "category": "especialidades",
+    "summary": "Orientação alimentar para crescimento, desenvolvimento e hábitos saudáveis."
   },
   {
-    "slug": "judo",
-    "title": "Judô",
-    "summary": "Prática esportiva adaptada que estimula disciplina, coordenação e autoconfiança."
+    "slug": "terapia-alimentar",
+    "title": "Terapia Alimentar",
+    "category": "especialidades",
+    "summary": "Acompanhamento especializado para seletividade alimentar, mastigação e relação positiva com a comida."
+  },
+  {
+    "slug": "neurologia-geral",
+    "title": "Neurologia Geral",
+    "category": "especialidades",
+    "summary": "Avaliação e acompanhamento neurológico com olhar para o desenvolvimento integral."
+  },
+  {
+    "slug": "grupo-de-musicalizacao",
+    "title": "Grupo de musicalização",
+    "category": "grupos",
+    "summary": "Vivências musicais em grupo para expressão, vínculo, ritmo e socialização."
+  },
+  {
+    "slug": "grupo-de-habilidades-sociais",
+    "title": "Grupo de habilidades sociais",
+    "category": "grupos",
+    "summary": "Práticas em grupo para comunicação, cooperação, empatia e convivência."
+  },
+  {
+    "slug": "funcional",
+    "title": "Funcional",
+    "category": "esportes",
+    "summary": "Atividade física adaptada para força, flexibilidade, coordenação e bem-estar."
+  },
+  {
+    "slug": "natacao",
+    "title": "Natação",
+    "category": "esportes",
+    "summary": "Atividades aquáticas que promovem segurança, saúde física e diversão com propósito."
   }
 ]

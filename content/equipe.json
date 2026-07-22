@@ -1,0 +1,95 @@
+[
+  {
+    "id": "cristiane-sanches",
+    "name": "Cristiane Sanches",
+    "role": "Terapeuta Ocupacional",
+    "registry": "CREFITO 12612 TO",
+    "photo": "/images/equipe/cristiane-sanches.png",
+    "photoAlt": "Cristiane Sanches, terapeuta ocupacional da Casa LuBe"
+  },
+  {
+    "id": "francilene-lima",
+    "name": "Francilene Lima",
+    "role": "Psicóloga",
+    "registry": "CRP 11/10150",
+    "photo": "/images/equipe/francilene-lima.png",
+    "photoAlt": "Francilene Lima, psicóloga da Casa LuBe"
+  },
+  {
+    "id": "iris-braz",
+    "name": "Iris Braz",
+    "role": "Professora de Natação",
+    "registry": "CREF 013636-G/CE",
+    "photo": "/images/equipe/iris-braz.png",
+    "photoAlt": "Iris Braz, professora de natação da Casa LuBe"
+  },
+  {
+    "id": "joicy-kelly",
+    "name": "Joicy Kelly",
+    "role": "Fisioterapeuta",
+    "registry": "CREFITO 341969-F",
+    "photo": "/images/equipe/joicy-kelly.png",
+    "photoAlt": "Joicy Kelly, fisioterapeuta da Casa LuBe"
+  },
+  {
+    "id": "emanuelly-da-costa",
+    "name": "Emanuelly da Costa",
+    "role": "Fonoaudióloga",
+    "registry": "CRFa 8-13502",
+    "photo": "/images/equipe/emanuelly-da-costa.png",
+    "photoAlt": "Emanuelly da Costa, fonoaudióloga da Casa LuBe"
+  },
+  {
+    "id": "edson-ferreira",
+    "name": "Edson Ferreira",
+    "role": "Psicomotricista",
+    "registry": "CREF 012235-G/CE · ABP n° 01.000776",
+    "photo": "/images/equipe/edson-ferreira.png",
+    "photoAlt": "Edson Ferreira, psicomotricista da Casa LuBe"
+  },
+  {
+    "id": "camila-de-castro",
+    "name": "Camila de Castro",
+    "role": "Terapeuta Ocupacional",
+    "registry": "CREFITO 13097 TO",
+    "photo": "/images/equipe/camila-de-castro.png",
+    "photoAlt": "Camila de Castro, terapeuta ocupacional da Casa LuBe"
+  },
+  {
+    "id": "raiane-de-paula",
+    "name": "Raiane de Paula",
+    "role": "Psicopedagoga",
+    "photo": "/images/equipe/raiane-de-paula.png",
+    "photoAlt": "Raiane de Paula, psicopedagoga da Casa LuBe"
+  },
+  {
+    "id": "barbara-cavalcante",
+    "name": "Bárbara Cavalcante",
+    "role": "Recepcionista",
+    "photo": "/images/equipe/barbara-cavalcante.png",
+    "photoAlt": "Bárbara Cavalcante, recepcionista da Casa LuBe"
+  },
+  {
+    "id": "rafaella-leonilde",
+    "name": "Rafaella Leonilde",
+    "role": "Assistente Administrativo",
+    "photo": "/images/equipe/rafaella-leonilde.png",
+    "photoAlt": "Rafaella Leonilde, assistente administrativo da Casa LuBe"
+  },
+  {
+    "id": "paloma-abreu",
+    "name": "Paloma Abreu",
+    "role": "Fonoaudióloga",
+    "registry": "CRFa 13103",
+    "photo": "/images/equipe/paloma-abreu.png",
+    "photoAlt": "Paloma Abreu, fonoaudióloga da Casa LuBe"
+  },
+  {
+    "id": "layla-wynny",
+    "name": "Layla Wynny",
+    "role": "Nutricionista",
+    "registry": "CRN 13695",
+    "photo": "/images/equipe/layla-wynny.png",
+    "photoAlt": "Layla Wynny, nutricionista da Casa LuBe"
+  }
+]

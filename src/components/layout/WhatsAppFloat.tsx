@@ -1,27 +1,181 @@
-import { getSite } from "@/lib/content";
+"use client";
+
+import Image from "next/image";
+import { useEffect, useId, useRef, useState } from "react";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { DEFAULT_WA_TEXT, whatsappHref } from "@/lib/whatsapp";
 
-export function WhatsAppFloat() {
-  const site = getSite();
-  const href = whatsappHref(site.units[0].whatsapp, DEFAULT_WA_TEXT);
+type WhatsAppFloatProps = {
+  phone: string;
+  clinicName?: string;
+};
+
+const QUICK_REPLIES = [
+  "Quero agendar uma avaliação",
+  "Quais especialidades vocês atendem?",
+  "Gostaria de conhecer a estrutura",
+];
+
+export function WhatsAppFloat({
+  phone,
+  clinicName = "Casa LuBe",
+}: WhatsAppFloatProps) {
+  const [open, setOpen] = useState(false);
+  const [draft, setDraft] = useState(DEFAULT_WA_TEXT);
+  const panelId = useId();
+  const panelRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setOpen(false);
+    }
+
+    function onPointerDown(event: MouseEvent) {
+      const target = event.target as Node;
+      if (
+        panelRef.current?.contains(target) ||
+        triggerRef.current?.contains(target)
+      ) {
+        return;
+      }
+      setOpen(false);
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("mousedown", onPointerDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("mousedown", onPointerDown);
+    };
+  }, [open]);
+
+  function openWhatsApp(text: string) {
+    window.open(whatsappHref(phone, text), "_blank", "noopener,noreferrer");
+    setOpen(false);
+  }
 
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label="Abrir conversa no WhatsApp"
-      className="fixed right-4 bottom-4 z-50 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[#25D366] text-white shadow-lg transition hover:scale-105 hover:shadow-xl md:right-6 md:bottom-6"
-    >
-      <svg
-        viewBox="0 0 32 32"
-        className="h-7 w-7"
-        fill="currentColor"
-        aria-hidden
+    <div className="pointer-events-none fixed right-4 bottom-4 z-50 flex flex-col items-end gap-3 md:right-6 md:bottom-6">
+      {open ? (
+        <div
+          ref={panelRef}
+          id={panelId}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Conversa com a Casa LuBe no WhatsApp"
+          className="pointer-events-auto flex w-[min(100vw-2rem,22rem)] flex-col overflow-hidden rounded-3xl border border-lube-ink/10 bg-[#efeae2] shadow-[0_24px_60px_-20px_rgba(15,42,54,0.55)]"
+        >
+          <header className="flex items-center gap-3 bg-[#075e54] px-4 py-3 text-white">
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              className="rounded-full p-1 text-white/80 transition hover:bg-white/10 hover:text-white"
+              aria-label="Fechar conversa"
+            >
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" aria-hidden>
+                <path
+                  d="M15 6 9 12l6 6"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+            <div className="relative h-10 w-10 overflow-hidden rounded-full border border-white/25 bg-white">
+              <Image
+                src="/brand/logo.png"
+                alt=""
+                fill
+                className="object-contain p-1"
+                sizes="40px"
+              />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-bold leading-tight">
+                {clinicName}
+              </p>
+              <p className="text-xs text-white/75">online agora</p>
+            </div>
+            <WhatsAppIcon className="h-5 w-5 shrink-0 opacity-90" />
+          </header>
+
+          <div className="flex flex-1 flex-col gap-3 bg-[url('data:image/svg+xml,%3Csvg width=%2740%27 height=%2740%27 viewBox=%270 0 40 40%27 xmlns=%27http://www.w3.org/2000/svg%27%3E%3Cg fill=%27%23d5cfc4%27 fill-opacity=%270.35%27%3E%3Cpath d=%27M0 40L40 0H20L0 20M40 40V20L20 40%27/%3E%3C/g%3E%3C/svg%3E')] px-3 py-4">
+            <div className="max-w-[85%] rounded-2xl rounded-tl-sm bg-white px-3 py-2 text-sm leading-relaxed text-[#111b21] shadow-sm">
+              Olá! 👋 Bem-vindo(a) à <strong>{clinicName}</strong>.
+              <br />
+              Como podemos ajudar sua família hoje?
+              <span className="mt-1 block text-right text-[10px] text-[#667781]">
+                agora
+              </span>
+            </div>
+
+            <div className="flex flex-col items-start gap-2">
+              {QUICK_REPLIES.map((reply) => (
+                <button
+                  key={reply}
+                  type="button"
+                  onClick={() => openWhatsApp(reply)}
+                  className="rounded-full border border-[#25d366]/45 bg-white/90 px-3 py-1.5 text-left text-xs font-semibold text-[#075e54] transition hover:border-[#25d366] hover:bg-white"
+                >
+                  {reply}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <form
+            className="flex items-center gap-2 border-t border-black/5 bg-[#f0f2f5] px-3 py-2.5"
+            onSubmit={(event) => {
+              event.preventDefault();
+              const text = draft.trim() || DEFAULT_WA_TEXT;
+              openWhatsApp(text);
+            }}
+          >
+            <label className="sr-only" htmlFor={`${panelId}-msg`}>
+              Mensagem
+            </label>
+            <input
+              id={`${panelId}-msg`}
+              value={draft}
+              onChange={(event) => setDraft(event.target.value)}
+              className="min-h-10 flex-1 rounded-full border-0 bg-white px-4 text-sm text-[#111b21] shadow-sm outline-none ring-0 placeholder:text-[#667781] focus:ring-2 focus:ring-[#25d366]/40"
+              placeholder="Digite uma mensagem"
+            />
+            <button
+              type="submit"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#25d366] text-white transition hover:bg-[#1da851]"
+              aria-label="Enviar no WhatsApp"
+            >
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor" aria-hidden>
+                <path d="M3.4 20.6 21 12 3.4 3.4 3 10.2 15 12 3 13.8z" />
+              </svg>
+            </button>
+          </form>
+        </div>
+      ) : null}
+
+      <button
+        ref={triggerRef}
+        type="button"
+        aria-expanded={open}
+        aria-controls={panelId}
+        aria-label={
+          open
+            ? "Fechar conversa do WhatsApp"
+            : "Abrir conversa no WhatsApp da Casa LuBe"
+        }
+        onClick={() => setOpen((value) => !value)}
+        className="lube-btn-wa pointer-events-auto inline-flex h-14 items-center justify-center gap-2.5 rounded-[1.35rem] px-4 text-white"
       >
-        <path d="M19.11 17.4c-.28-.14-1.64-.81-1.9-.9-.25-.1-.44-.14-.62.14-.18.28-.71.9-.87 1.08-.16.18-.32.2-.6.07-.28-.14-1.17-.43-2.23-1.37-.82-.73-1.38-1.64-1.54-1.92-.16-.28-.02-.43.12-.57.13-.13.28-.32.42-.48.14-.16.18-.28.28-.46.1-.18.05-.35-.02-.49-.07-.14-.62-1.49-.85-2.04-.22-.53-.45-.46-.62-.47h-.53c-.18 0-.48.07-.73.35-.25.28-.96.94-.96 2.29s.98 2.65 1.12 2.83c.14.18 1.93 2.95 4.68 4.14.65.28 1.16.45 1.56.57.65.21 1.25.18 1.72.11.52-.08 1.64-.67 1.87-1.32.23-.65.23-1.2.16-1.32-.07-.11-.25-.18-.53-.32z" />
-        <path d="M16.02 3C9.39 3 4 8.38 4 14.99c0 2.11.55 4.17 1.6 5.99L4 29l8.2-1.55c1.75.96 3.73 1.46 5.75 1.46h.01c6.63 0 12.02-5.38 12.02-12S22.65 3 16.02 3zm0 21.86h-.01c-1.78 0-3.53-.48-5.06-1.39l-.36-.21-4.86.92.98-4.74-.24-.38a9.84 9.84 0 0 1-1.51-5.24c0-5.44 4.44-9.87 9.9-9.87 2.64 0 5.13 1.03 7 2.9a9.8 9.8 0 0 1 2.9 6.97c0 5.44-4.44 9.87-9.9 9.87z" />
-      </svg>
-    </a>
+        <WhatsAppIcon className="h-7 w-7 shrink-0" />
+        <span className="hidden pr-0.5 text-sm font-bold tracking-wide sm:inline">
+          WhatsApp
+        </span>
+      </button>
+    </div>
   );
 }

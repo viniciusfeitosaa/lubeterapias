@@ -3,6 +3,7 @@ import { Baloo_2, Fraunces, Nunito_Sans } from "next/font/google";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
+import { getSite } from "@/lib/content";
 import "./globals.css";
 
 const baloo = Baloo_2({
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
     template: "%s · Casa LuBe",
   },
   description:
-    "Clínica de diagnósticos e terapias para crianças com transtornos do neurodesenvolvimento. Unidades em Fortaleza e Eusébio.",
+    "Clínica de diagnósticos e terapias para crianças com transtornos do neurodesenvolvimento. Unidade em Fortaleza-CE.",
   metadataBase: new URL("https://lubeterapia.com.br"),
 };
 
@@ -38,15 +39,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const site = getSite();
+
   return (
     <html
       lang="pt-BR"
       className={`${baloo.variable} ${fraunces.variable} ${nunito.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans text-lube-ink">
+      <body className="flex min-h-full flex-col font-sans text-lube-ink antialiased">
         <a
           href="#conteudo"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-lube-foam focus:px-4 focus:py-2"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-xl focus:bg-lube-foam focus:px-4 focus:py-2 focus:font-bold focus:shadow-lg"
         >
           Ir para o conteúdo
         </a>
@@ -55,7 +58,7 @@ export default function RootLayout({
           {children}
         </div>
         <SiteFooter />
-        <WhatsAppFloat />
+        <WhatsAppFloat phone={site.units[0].whatsapp} clinicName={site.brand.name} />
       </body>
     </html>
   );

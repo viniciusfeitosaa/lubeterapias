@@ -1,20 +1,22 @@
 import Link from "next/link";
+import { ArrowSparkIcon } from "@/components/ui/ArrowSparkIcon";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 
 type ButtonProps = {
   href: string;
   children: React.ReactNode;
-  variant?: "primary" | "secondary" | "ghost";
+  variant?: "primary" | "secondary" | "ghost" | "wa";
   className?: string;
   external?: boolean;
 };
 
 const variants = {
-  primary:
-    "bg-lube-teal text-white shadow-[0_10px_30px_-12px_rgba(42,157,143,0.7)] hover:bg-[#238578]",
+  primary: "lube-btn-primary",
   secondary:
-    "bg-lube-foam/95 text-lube-ink ring-1 ring-lube-ink/10 hover:bg-white",
+    "bg-lube-foam text-lube-ink border border-lube-ink/10 shadow-sm hover:border-lube-teal/30 hover:bg-white",
   ghost:
-    "bg-transparent text-lube-ink ring-1 ring-lube-ink/15 hover:bg-lube-sky/20",
+    "bg-transparent text-lube-ink border border-lube-ink/15 hover:border-lube-teal/40 hover:bg-lube-sky/15",
+  wa: "lube-btn-wa",
 };
 
 export function Button({
@@ -24,7 +26,25 @@ export function Button({
   className = "",
   external = false,
 }: ButtonProps) {
-  const classes = `inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition duration-300 ${variants[variant]} ${className}`;
+  const classes = `inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-bold tracking-wide transition duration-300 ${variants[variant]} ${className}`;
+
+  let content: React.ReactNode = children;
+
+  if (variant === "wa") {
+    content = (
+      <>
+        <WhatsAppIcon className="h-[1.15rem] w-[1.15rem] shrink-0 opacity-95" />
+        <span>{children}</span>
+      </>
+    );
+  } else if (variant === "primary") {
+    content = (
+      <>
+        <span>{children}</span>
+        <ArrowSparkIcon className="lube-btn-icon h-5 w-5 shrink-0" />
+      </>
+    );
+  }
 
   if (external) {
     return (
@@ -34,14 +54,14 @@ export function Button({
         target="_blank"
         rel="noopener noreferrer"
       >
-        {children}
+        {content}
       </a>
     );
   }
 
   return (
     <Link href={href} className={classes}>
-      {children}
+      {content}
     </Link>
   );
 }

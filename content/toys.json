@@ -1,0 +1,153 @@
+{
+  "props": [
+    {
+      "id": "blocos",
+      "src": "/images/toys/blocos.webp",
+      "width": 1024,
+      "height": 1024,
+      "defaultSize": "md"
+    },
+    {
+      "id": "bolinha",
+      "src": "/images/toys/bolinha.webp",
+      "width": 1024,
+      "height": 1024,
+      "defaultSize": "md"
+    },
+    {
+      "id": "encaixe",
+      "src": "/images/toys/encaixe.webp",
+      "width": 1024,
+      "height": 1024,
+      "defaultSize": "md"
+    },
+    {
+      "id": "giz",
+      "src": "/images/toys/giz.webp",
+      "width": 1024,
+      "height": 1024,
+      "defaultSize": "sm"
+    },
+    {
+      "id": "livro",
+      "src": "/images/toys/livro.webp",
+      "width": 1024,
+      "height": 1024,
+      "defaultSize": "md"
+    },
+    {
+      "id": "chocalho",
+      "src": "/images/toys/chocalho.webp",
+      "width": 1024,
+      "height": 1024,
+      "defaultSize": "sm"
+    },
+    {
+      "id": "nuvem",
+      "src": "/images/toys/nuvem.webp",
+      "width": 1024,
+      "height": 1024,
+      "defaultSize": "md"
+    },
+    {
+      "id": "casinha",
+      "src": "/images/toys/casinha.webp",
+      "width": 1024,
+      "height": 1024,
+      "defaultSize": "md"
+    },
+    {
+      "id": "quebra",
+      "src": "/images/toys/quebra.png",
+      "width": 1024,
+      "height": 1024,
+      "defaultSize": "sm"
+    }
+  ],
+  "sections": {
+    "hero": {
+      "desktop": [],
+      "mobile": []
+    },
+    "sobre": {
+      "desktop": [
+        { "id": "nuvem", "placement": "section-tr", "size": "lg" },
+        { "id": "quebra", "placement": "section-bl", "size": "sm" }
+      ],
+      "mobile": [
+        { "id": "nuvem", "placement": "section-tr", "size": "sm" }
+      ]
+    },
+    "unidades": {
+      "desktop": [
+        { "id": "blocos", "placement": "section-bl", "size": "md" },
+        { "id": "bolinha", "placement": "section-tr", "size": "sm" }
+      ],
+      "mobile": [
+        { "id": "blocos", "placement": "section-bl", "size": "sm" }
+      ]
+    },
+    "especialidades-preview": {
+      "desktop": [
+        { "id": "encaixe", "placement": "section-tr", "size": "md" },
+        { "id": "bolinha", "placement": "section-bl", "size": "sm" }
+      ],
+      "mobile": [{ "id": "bolinha", "placement": "section-tr", "size": "sm" }]
+    },
+    "blog-teaser": {
+      "desktop": [
+        { "id": "livro", "placement": "section-tr", "size": "md" },
+        { "id": "giz", "placement": "section-bl", "size": "sm" }
+      ],
+      "mobile": [{ "id": "livro", "placement": "section-tr", "size": "sm" }]
+    },
+    "especialidades": {
+      "desktop": [
+        { "id": "chocalho", "placement": "section-tr", "size": "md" },
+        { "id": "encaixe", "placement": "section-bl", "size": "sm" }
+      ],
+      "mobile": [{ "id": "encaixe", "placement": "section-tr", "size": "sm" }]
+    },
+    "blog": {
+      "desktop": [
+        { "id": "livro", "placement": "section-tr", "size": "md" },
+        { "id": "casinha", "placement": "section-bl", "size": "sm" }
+      ],
+      "mobile": [{ "id": "livro", "placement": "section-tr", "size": "sm" }]
+    },
+    "contato": {
+      "desktop": [
+        { "id": "casinha", "placement": "section-tr", "size": "md" },
+        { "id": "chocalho", "placement": "section-bl", "size": "sm" }
+      ],
+      "mobile": [{ "id": "casinha", "placement": "section-tr", "size": "sm" }]
+    },
+    "quem-somos": {
+      "desktop": [
+        { "id": "casinha", "placement": "section-tr", "size": "lg" },
+        { "id": "bolinha", "placement": "section-bl", "size": "md" }
+      ],
+      "mobile": [
+        { "id": "casinha", "placement": "section-tr", "size": "sm" }
+      ]
+    },
+    "estrutura": {
+      "desktop": [
+        { "id": "nuvem", "placement": "section-tr", "size": "lg" },
+        { "id": "encaixe", "placement": "section-bl", "size": "sm" }
+      ],
+      "mobile": [
+        { "id": "nuvem", "placement": "section-tr", "size": "sm" }
+      ]
+    },
+    "privacidade": {
+      "desktop": [
+        { "id": "livro", "placement": "section-tr", "size": "md" },
+        { "id": "giz", "placement": "section-bl", "size": "sm" }
+      ],
+      "mobile": [
+        { "id": "livro", "placement": "section-tr", "size": "sm" }
+      ]
+    }
+  }
+}

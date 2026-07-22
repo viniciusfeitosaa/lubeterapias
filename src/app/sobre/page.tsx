@@ -1,8 +1,16 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { TeamSection } from "@/components/sections/TeamSection";
 import { Button } from "@/components/ui/Button";
+import { PageHero } from "@/components/ui/PageHero";
+import {
+  MissionIcon,
+  ValuesIcon,
+  VisionIcon,
+} from "@/components/ui/PurposeIcons";
 import { Reveal } from "@/components/ui/Reveal";
 import { getSite } from "@/lib/content";
+import { SITE_IMAGES } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Sobre",
@@ -13,56 +21,115 @@ export const metadata: Metadata = {
 export default function SobrePage() {
   const site = getSite();
 
+  const purpose = [
+    {
+      title: "Missão",
+      body: site.mission,
+      icon: MissionIcon,
+      tone: "bg-lube-coral/15 text-lube-coral",
+    },
+    {
+      title: "Visão",
+      body: site.vision,
+      icon: VisionIcon,
+      tone: "bg-lube-sky/25 text-lube-teal",
+    },
+    {
+      title: "Valores",
+      body: site.values,
+      icon: ValuesIcon,
+      tone: "bg-lube-sun/25 text-[#c4891f]",
+    },
+  ] as const;
+
   return (
     <main>
-      <section className="relative overflow-hidden py-20 md:py-28">
-        <div className="absolute inset-0 bg-[linear-gradient(160deg,#dff3f8,#f0f7fa_40%,#e7f6ea)]" />
-        <div className="relative mx-auto max-w-4xl px-4 md:px-6">
-          <Reveal>
-            <p className="font-[family-name:var(--font-baloo)] text-sm font-semibold tracking-wide text-lube-teal uppercase">
-              Quem somos
-            </p>
-            <h1 className="mt-3 font-[family-name:var(--font-fraunces)] text-4xl text-lube-ink md:text-5xl">
-              Conheça nossa história
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-lube-ink/80">
-              {site.about}
-            </p>
-          </Reveal>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Quem somos"
+        title="Conheça nossa história"
+        description={site.about}
+        toys="quem-somos"
+      />
 
-      <section className="mx-auto grid max-w-6xl items-center gap-10 px-4 pb-20 md:grid-cols-2 md:px-6 md:pb-28">
+      <section className="lube-shell grid items-center gap-10 py-16 md:grid-cols-2 md:py-24">
         <Reveal>
-          <div className="relative aspect-square overflow-hidden rounded-[2rem]">
-            <Image
-              src="/images/sobre-casa.jpg"
-              alt="Equipe e ambiente da Casa LuBe"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
+          <div className="grid gap-4">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-lube-ink/8 shadow-[var(--shadow-soft)]">
+              <Image
+                src={SITE_IMAGES.fachada.src}
+                alt={SITE_IMAGES.fachada.alt}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="relative aspect-square overflow-hidden rounded-[1.5rem] border border-lube-ink/8">
+                <Image
+                  src={SITE_IMAGES.recepcao.src}
+                  alt={SITE_IMAGES.recepcao.alt}
+                  fill
+                  className="object-cover"
+                  sizes="25vw"
+                />
+              </div>
+              <div className="relative aspect-square overflow-hidden rounded-[1.5rem] border border-lube-ink/8">
+                <Image
+                  src={SITE_IMAGES.salaLudica.src}
+                  alt={SITE_IMAGES.salaLudica.alt}
+                  fill
+                  className="object-cover"
+                  sizes="25vw"
+                />
+              </div>
+            </div>
           </div>
         </Reveal>
         <Reveal delay={0.1}>
-          <h2 className="font-[family-name:var(--font-fraunces)] text-3xl text-lube-ink">
+          <h2 className="font-display text-3xl text-lube-ink md:text-4xl">
             Casa LuBe: lúdico e bem-estar
           </h2>
-          <p className="mt-4 leading-relaxed text-lube-ink/75">
+          <p className="mt-4 leading-relaxed text-lube-ink-soft">
             Nascemos da necessidade de um espaço especializado e acolhedor para
             crianças e adolescentes com atrasos no desenvolvimento infantil. Com
             infraestrutura moderna e equipe multidisciplinar, transformamos
             cuidado em presença cotidiana.
           </p>
-          <p className="mt-4 leading-relaxed text-lube-ink/75">
+          <p className="mt-4 leading-relaxed text-lube-ink-soft">
             Empresa do grupo {site.brand.group}, com direção clínica liderada
             por profissionais dedicados às famílias atípicas.
           </p>
-          <div className="mt-8">
+          <div id="proposito" className="mt-8 scroll-mt-28 space-y-4">
+            {purpose.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div key={item.title} className="lube-card p-5">
+                  <div className="flex items-center gap-3">
+                    <span
+                      className={`inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl ${item.tone}`}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <p className="lube-eyebrow mt-0!">{item.title}</p>
+                  </div>
+                  <p className="mt-3 text-sm leading-relaxed text-lube-ink-soft">
+                    {item.body}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+          <div className="mt-8 flex flex-wrap gap-3">
             <Button href="/especialidades">Conhecer nossos serviços</Button>
+            <Button href="/contato" variant="secondary">
+              Falar conosco
+            </Button>
           </div>
         </Reveal>
       </section>
+
+      <TeamSection wash />
     </main>
   );
 }

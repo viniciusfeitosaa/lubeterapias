@@ -1,13 +1,16 @@
+import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getSite } from "@/lib/content";
 
 export function InstagramTeaser() {
   const site = getSite();
+  const handle =
+    site.brand.instagram.split("/").filter(Boolean).pop() ?? "lubeterapias";
 
   return (
-    <section className="py-20 md:py-24">
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
+    <section className="relative overflow-hidden py-20 md:py-24">
+      <div className="lube-shell">
         <Reveal>
           <SectionHeading
             eyebrow="Instagram"
@@ -17,14 +20,9 @@ export function InstagramTeaser() {
         </Reveal>
         <Reveal delay={0.1}>
           <div className="mt-10 flex justify-center">
-            <a
-              href={site.brand.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-2xl bg-[linear-gradient(135deg,#f28482,#f4c95d_45%,#7ec8e3)] px-8 py-5 font-semibold text-lube-ink shadow-md transition hover:scale-[1.02]"
-            >
-              Seguir @{site.brand.instagram.split("/").filter(Boolean).pop()}
-            </a>
+            <Button href={site.brand.instagram} external className="px-8 py-5">
+              Seguir @{handle}
+            </Button>
           </div>
         </Reveal>
       </div>

@@ -3,12 +3,20 @@ import Link from "next/link";
 
 type LogoProps = {
   variant?: "light" | "color";
+  /** sm = header; md = footer / padrão */
+  size?: "sm" | "md";
   className?: string;
   priority?: boolean;
 };
 
+const lightSizeClass = {
+  sm: "h-auto! w-[5.25rem] md:w-[6rem]",
+  md: "h-auto! w-[7.5rem] md:w-[8.5rem]",
+} as const;
+
 export function Logo({
   variant = "color",
+  size = "md",
   className = "",
   priority = false,
 }: LogoProps) {
@@ -17,19 +25,24 @@ export function Logo({
       ? "/brand/logo-borda-branca.png"
       : "/brand/logo.png";
 
+  const isLight = variant === "light";
+
   return (
-    <Link href="/" className={`inline-flex items-center gap-2 ${className}`}>
+    <Link
+      href="/"
+      className={`inline-flex items-center rounded-xl ${className}`}
+      aria-label="Casa LuBe — página inicial"
+    >
       <Image
         src={src}
-        alt="Casa LuBe"
-        width={variant === "light" ? 120 : 56}
-        height={variant === "light" ? 108 : 56}
+        alt=""
+        width={isLight ? 160 : 200}
+        height={isLight ? 144 : 90}
         priority={priority}
-        className="h-12 w-auto md:h-14"
+        className={
+          isLight ? lightSizeClass[size] : "h-12! w-auto md:h-14!"
+        }
       />
-      <span className="font-[family-name:var(--font-baloo)] text-xl font-bold tracking-tight text-lube-ink md:text-2xl">
-        Casa LuBe
-      </span>
     </Link>
   );
 }

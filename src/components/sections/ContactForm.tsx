@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import { getSite } from "@/lib/content";
 import { whatsappHref } from "@/lib/whatsapp";
 
@@ -29,43 +30,45 @@ export function ContactForm() {
   }
 
   return (
-    <form
-      onSubmit={onSubmit}
-      className="rounded-[1.5rem] bg-lube-foam p-6 ring-1 ring-lube-ink/8 md:p-8"
-    >
-      <h2 className="font-[family-name:var(--font-fraunces)] text-2xl text-lube-ink">
-        Enviar mensagem
-      </h2>
-      <p className="mt-2 text-sm text-lube-ink/70">
-        Ao enviar, abrimos o WhatsApp da unidade escolhida com sua mensagem.
+    <form onSubmit={onSubmit} className="lube-card p-6 md:p-8" noValidate={false}>
+      <h2 className="font-display text-2xl text-lube-ink">Enviar mensagem</h2>
+      <p className="mt-2 text-sm text-lube-ink-soft">
+        Ao enviar, abrimos o WhatsApp da unidade escolhida com sua mensagem
+        pronta — você só confirma o envio.
       </p>
 
-      <label className="mt-6 block text-sm font-semibold">
+      <label className="mt-6 block text-sm font-bold text-lube-ink">
         Nome
         <input
           required
+          name="name"
+          autoComplete="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mt-2 w-full rounded-xl border border-lube-ink/15 bg-lube-mist px-4 py-3 font-normal outline-none focus:border-lube-teal"
+          className="lube-input"
         />
       </label>
 
-      <label className="mt-4 block text-sm font-semibold">
+      <label className="mt-4 block text-sm font-bold text-lube-ink">
         Telefone
         <input
           required
+          name="tel"
+          type="tel"
+          autoComplete="tel"
+          inputMode="tel"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          className="mt-2 w-full rounded-xl border border-lube-ink/15 bg-lube-mist px-4 py-3 font-normal outline-none focus:border-lube-teal"
+          className="lube-input"
         />
       </label>
 
-      <label className="mt-4 block text-sm font-semibold">
+      <label className="mt-4 block text-sm font-bold text-lube-ink">
         Unidade
         <select
           value={unitId}
           onChange={(e) => setUnitId(e.target.value)}
-          className="mt-2 w-full rounded-xl border border-lube-ink/15 bg-lube-mist px-4 py-3 font-normal outline-none focus:border-lube-teal"
+          className="lube-input"
         >
           {site.units.map((unit) => (
             <option key={unit.id} value={unit.id}>
@@ -75,14 +78,14 @@ export function ContactForm() {
         </select>
       </label>
 
-      <label className="mt-4 block text-sm font-semibold">
+      <label className="mt-4 block text-sm font-bold text-lube-ink">
         Mensagem
         <textarea
           required
           rows={4}
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          className="mt-2 w-full rounded-xl border border-lube-ink/15 bg-lube-mist px-4 py-3 font-normal outline-none focus:border-lube-teal"
+          className="lube-input resize-y"
         />
       </label>
 
@@ -98,8 +101,9 @@ export function ContactForm() {
 
       <button
         type="submit"
-        className="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-lube-teal px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#238578]"
+        className="lube-btn-wa mt-6 inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-bold tracking-wide"
       >
+        <WhatsAppIcon className="h-[1.15rem] w-[1.15rem]" />
         Continuar no WhatsApp
       </button>
     </form>

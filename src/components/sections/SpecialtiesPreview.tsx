@@ -1,14 +1,22 @@
+import Image from "next/image";
 import Link from "next/link";
+import { SectionToys } from "@/components/toys/SectionToys";
 import { Reveal } from "@/components/ui/Reveal";
+import { SectionEdge } from "@/components/ui/SectionEdge";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getEspecialidades } from "@/lib/content";
+import { getServiceImage } from "@/lib/images";
 
 export function SpecialtiesPreview() {
-  const items = getEspecialidades().slice(0, 8);
+  const items = getEspecialidades()
+    .filter((item) => item.category === "especialidades")
+    .slice(0, 6);
 
   return (
-    <section className="py-20 md:py-28">
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
+    <section className="relative overflow-hidden py-20 pb-24 md:py-28 md:pb-32">
+      <SectionToys section="especialidades-preview" />
+      <div className="lube-shell pointer-events-none relative z-10">
+        <div className="pointer-events-auto">
         <Reveal>
           <SectionHeading
             eyebrow="Especialidades"
@@ -17,36 +25,53 @@ export function SpecialtiesPreview() {
           />
         </Reveal>
 
-        <div className="mt-10 flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {items.map((item, index) => (
-            <Reveal key={item.slug} delay={index * 0.05} className="snap-start">
-              <Link
-                href={`/especialidades/${item.slug}`}
-                className="block w-[260px] shrink-0 rounded-2xl bg-lube-foam p-5 ring-1 ring-lube-ink/8 transition hover:-translate-y-1 hover:shadow-lg hover:ring-lube-teal/30"
-              >
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-[linear-gradient(135deg,var(--lube-sky),var(--lube-teal))] text-lg font-bold text-white">
-                  {item.title.slice(0, 1)}
-                </div>
-                <h3 className="font-[family-name:var(--font-fraunces)] text-xl text-lube-ink">
-                  {item.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-lube-ink/70">
-                  {item.summary}
-                </p>
-              </Link>
-            </Reveal>
-          ))}
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {items.map((item, index) => {
+            const img = getServiceImage(item.slug);
+            return (
+              <Reveal key={item.slug} delay={index * 0.04}>
+                <Link
+                  href={`/especialidades/${item.slug}`}
+                  className="lube-card lube-card-interactive group block h-full overflow-hidden"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <Image
+                      src={img.src}
+                      alt={img.alt}
+                      fill
+                      className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-0 bg-gradient-to-t from-lube-foam via-transparent to-white/20"
+                    />
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-display text-xl text-lube-ink">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-lube-ink-soft">
+                      {item.summary}
+                    </p>
+                  </div>
+                </Link>
+              </Reveal>
+            );
+          })}
         </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-10 text-center">
           <Link
             href="/especialidades"
-            className="font-semibold text-lube-teal underline-offset-4 hover:underline"
+            className="font-bold text-lube-teal underline-offset-4 hover:underline"
           >
-            Ver todas as especialidades
+            Ver todos os serviços →
           </Link>
         </div>
+        </div>
       </div>
+      <SectionEdge flip />
     </section>
   );
 }

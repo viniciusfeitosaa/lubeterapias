@@ -1,45 +1,89 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { PageHero } from "@/components/ui/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { getEspecialidades } from "@/lib/content";
+import {
+  getEspecialidadesByCategory,
+  SPECIALTY_CATEGORY_LABELS,
+  SPECIALTY_CATEGORY_ORDER,
+} from "@/lib/content";
+import { getServiceImage } from "@/lib/images";
 
 export const metadata: Metadata = {
   title: "Especialidades",
   description:
-    "Conheça os serviços e terapias da Casa LuBe para o desenvolvimento infantil.",
+    "Especialidades, grupos e esportes da Casa LuBe para o desenvolvimento infantil.",
 };
 
 export default function EspecialidadesPage() {
-  const items = getEspecialidades();
-
   return (
-    <main className="py-16 md:py-24">
-      <div className="mx-auto max-w-6xl px-4 md:px-6">
-        <Reveal>
-          <SectionHeading
-            eyebrow="Serviços"
-            title="Conheça nossos serviços"
-            description="Uma rede de cuidados multidisciplinares para cada necessidade."
-          />
-        </Reveal>
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map((item, index) => (
-            <Reveal key={item.slug} delay={index * 0.03}>
-              <Link
-                href={`/especialidades/${item.slug}`}
-                className="block h-full rounded-2xl bg-lube-foam p-6 ring-1 ring-lube-ink/8 transition hover:-translate-y-1 hover:shadow-lg hover:ring-lube-teal/30"
-              >
-                <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-lube-ink">
-                  {item.title}
+    <main>
+      <PageHero
+        eyebrow="Serviços"
+        title="Conheça nossos serviços"
+        description="Especialidades clínicas, grupos e esportes em um cuidado multidisciplinar."
+        toys="especialidades"
+      />
+
+      <div className="lube-shell space-y-16 py-14 md:py-20">
+        {SPECIALTY_CATEGORY_ORDER.map((category) => {
+          const items = getEspecialidadesByCategory(category);
+          if (items.length === 0) return null;
+
+          return (
+            <section key={category} aria-labelledby={`cat-${category}`}>
+              <Reveal>
+                <h2
+                  id={`cat-${category}`}
+                  className="font-display text-2xl text-lube-ink md:text-3xl"
+                >
+                  {SPECIALTY_CATEGORY_LABELS[category]}
                 </h2>
-                <p className="mt-3 text-sm leading-relaxed text-lube-ink/70">
-                  {item.summary}
-                </p>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
+              </Reveal>
+
+              <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {items.map((item, index) => {
+                  const img = getServiceImage(item.slug);
+                  return (
+                    <Reveal key={item.slug} delay={index * 0.03}>
+                      <Link
+                        href={`/especialidades/${item.slug}`}
+                        className="lube-card lube-card-interactive group block h-full overflow-hidden"
+                      >
+                        <div className="relative aspect-[16/10] overflow-hidden">
+                          <Image
+                            src={img.src}
+                            alt={img.alt}
+                            fill
+                            className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          />
+                          {/* Véu claro — sensação acolhedora e “transparente” */}
+                          <div
+                            aria-hidden
+                            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-lube-foam via-transparent to-white/25"
+                          />
+                        </div>
+                        <div className="relative p-5">
+                          <h3 className="font-display text-xl text-lube-ink">
+                            {item.title}
+                          </h3>
+                          <p className="mt-3 text-sm leading-relaxed text-lube-ink-soft">
+                            {item.summary}
+                          </p>
+                          <p className="mt-4 text-sm font-bold text-lube-teal">
+                            Saiba mais →
+                          </p>
+                        </div>
+                      </Link>
+                    </Reveal>
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })}
       </div>
     </main>
   );
