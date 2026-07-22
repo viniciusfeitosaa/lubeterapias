@@ -71,7 +71,11 @@ export function ImageGallery({
   const slide = slides[index];
 
   return (
-    <section className="relative overflow-hidden py-16 pb-20 md:py-20 md:pb-24">
+    <section className="relative -mt-1.5 overflow-hidden bg-lube-foam py-16 pb-20 md:py-20 md:pb-24">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 -top-1 z-[1] h-3 bg-lube-foam"
+      />
       <div className="lube-shell">
         <ArchedEyebrow>{eyebrow}</ArchedEyebrow>
         <h2 className="-mt-1 text-center font-display text-3xl text-lube-ink md:text-4xl">
@@ -175,7 +179,7 @@ export function ImageGallery({
           {index + 1} / {slides.length} — {slide.name}
         </p>
       </div>
-      <SectionEdge flip variant="soft" />
+      <SectionEdge flip variant="soft" fillClassName="text-lube-mist" />
     </section>
   );
 }

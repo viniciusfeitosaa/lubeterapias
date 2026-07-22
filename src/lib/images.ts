@@ -1,8 +1,8 @@
 /** Imagens gerais do site */
 export const SITE_IMAGES = {
   salaLudica: {
-    src: "/images/lube-sala-ludica.png",
-    alt: "Sala lúdica da Casa LuBe com brinquedos sensoriais",
+    src: "/images/ambientes/sala-socializar.png",
+    alt: "Sala Socializar da Casa LuBe com balanço, tapete sensorial e brinquedos",
   },
   blocos: {
     src: "/images/lube-blocos-sensoriais.png",
@@ -21,12 +21,12 @@ export const SITE_IMAGES = {
     alt: "Recepção da Casa LuBe com balcão, sofá e arco azul",
   },
   fachada: {
-    src: "/images/lube-fachada.png",
+    src: "/images/fachada-casa.jpeg",
     alt: "Fachada da Casa LuBe em Fortaleza",
   },
   hero: {
-    src: "/images/hero-estrutura-recepcao.png",
-    alt: "Estrutura e recepção da Casa LuBe — ambiente acolhedor para famílias e crianças",
+    src: "/images/hero-home.jpeg",
+    alt: "Ambiente acolhedor da Casa LuBe — espaço para famílias e crianças",
   },
   /** Foto real da fachada (unidade / contato) */
   heroFachada: {
@@ -139,7 +139,6 @@ export const ROOM_IMAGES: Record<string, SiteImage[]> = {
       alt: "Espaço Flutuar da Casa LuBe — piscina terapêutica coberta",
     },
   ],
-  "sala-acolher": [SERVICE_IMAGES.psicoterapia],
   "sala-comunicar": [
     {
       src: "/images/ambientes/sala-comunicar-1.png",

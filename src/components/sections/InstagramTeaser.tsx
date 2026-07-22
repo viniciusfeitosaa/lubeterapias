@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
+import { SectionEdge } from "@/components/ui/SectionEdge";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getSite } from "@/lib/content";
 
@@ -9,7 +10,11 @@ export function InstagramTeaser() {
     site.brand.instagram.split("/").filter(Boolean).pop() ?? "lubeterapias";
 
   return (
-    <section className="relative overflow-hidden py-20 md:py-24">
+    <section className="relative -mt-1.5 overflow-hidden bg-lube-foam py-20 pb-24 md:py-24 md:pb-28">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 -top-1 z-[1] h-3 bg-lube-foam"
+      />
       <div className="lube-shell">
         <Reveal>
           <SectionHeading
@@ -26,6 +31,7 @@ export function InstagramTeaser() {
           </div>
         </Reveal>
       </div>
+      <SectionEdge fillClassName="text-lube-footer" />
     </section>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { RoomPhotoSlideshow } from "@/components/estrutura/RoomPhotoSlideshow";
 import { PageHero } from "@/components/ui/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
+import { SectionEdge } from "@/components/ui/SectionEdge";
 import { getSalas } from "@/lib/content";
 import { getRoomImages } from "@/lib/images";
 
@@ -23,8 +24,12 @@ export default function EstruturaPage() {
         toys="estrutura"
       />
 
-      <section className="lube-shell py-14 md:py-20">
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="relative -mt-1.5 overflow-hidden bg-lube-mist py-14 pb-20 md:py-20 md:pb-24">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -top-1 z-[1] h-3 bg-lube-mist"
+        />
+        <div className="lube-shell grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {salas.map((sala, index) => {
             const images = getRoomImages(sala.slug);
             return (
@@ -45,6 +50,7 @@ export default function EstruturaPage() {
             );
           })}
         </div>
+        <SectionEdge fillClassName="text-lube-footer" />
       </section>
     </main>
   );

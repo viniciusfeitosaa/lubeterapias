@@ -1,23 +1,33 @@
 import Image from "next/image";
 import { Reveal } from "@/components/ui/Reveal";
+import { SectionEdge } from "@/components/ui/SectionEdge";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getEquipe } from "@/lib/content";
 
 type TeamSectionProps = {
   /** Quando true, usa fundo lavado de página (útil em /sobre). */
   wash?: boolean;
+  /** Limite ondulado inferior (ex.: transição para o footer). */
+  edgeToFooter?: boolean;
 };
 
-export function TeamSection({ wash = false }: TeamSectionProps) {
+export function TeamSection({
+  wash = false,
+  edgeToFooter = false,
+}: TeamSectionProps) {
   const team = getEquipe();
   if (team.length === 0) return null;
 
   return (
     <section
-      className={`relative overflow-hidden py-16 md:py-24 ${
+      className={`relative -mt-1.5 overflow-hidden bg-lube-mist py-16 pb-20 md:py-24 md:pb-24 ${
         wash ? "lube-page-wash" : ""
       }`}
     >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 -top-1 z-[1] h-3 bg-lube-mist"
+      />
       <div className="lube-shell">
         <Reveal>
           <SectionHeading
@@ -60,6 +70,11 @@ export function TeamSection({ wash = false }: TeamSectionProps) {
           ))}
         </ul>
       </div>
+      {edgeToFooter ? (
+        <SectionEdge fillClassName="text-lube-footer" />
+      ) : (
+        <SectionEdge flip variant="soft" />
+      )}
     </section>
   );
 }

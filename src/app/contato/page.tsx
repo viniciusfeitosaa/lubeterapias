@@ -4,6 +4,7 @@ import { ContactForm } from "@/components/sections/ContactForm";
 import { Button } from "@/components/ui/Button";
 import { PageHero } from "@/components/ui/PageHero";
 import { Reveal } from "@/components/ui/Reveal";
+import { SectionEdge } from "@/components/ui/SectionEdge";
 import { getSite } from "@/lib/content";
 import { SITE_IMAGES } from "@/lib/images";
 import { DEFAULT_WA_TEXT, whatsappHref } from "@/lib/whatsapp";
@@ -27,10 +28,14 @@ export default function ContatoPage() {
         toys="contato"
       />
 
-      <section className="lube-shell py-14 md:py-20">
-        <div className="mx-auto max-w-3xl">
+      <section className="relative -mt-1.5 overflow-hidden bg-lube-mist py-14 pb-20 md:py-20 md:pb-24">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -top-1 z-[1] h-3 bg-lube-mist"
+        />
+        <div className="lube-shell mx-auto max-w-3xl">
           <Reveal>
-            <div className="mb-6 overflow-hidden rounded-[1.5rem] border border-lube-ink/8 shadow-[var(--shadow-soft)]">
+            <article className="lube-card overflow-hidden">
               <div className="relative aspect-[21/9] min-h-[140px]">
                 <Image
                   src={SITE_IMAGES.heroFachada.src}
@@ -39,20 +44,6 @@ export default function ContatoPage() {
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 768px"
                   priority
-                />
-              </div>
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.06}>
-            <article className="lube-card overflow-hidden">
-              <div className="h-[200px] bg-lube-sky-soft md:h-[240px]">
-                <iframe
-                  title={`Mapa ${unit.city}`}
-                  src={unit.mapsEmbed}
-                  className="h-full w-full border-0"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
                 />
               </div>
               <div className="p-5 md:p-6">
@@ -96,9 +87,14 @@ export default function ContatoPage() {
             </article>
           </Reveal>
         </div>
+        <SectionEdge flip variant="soft" fillClassName="text-lube-foam" />
       </section>
 
-      <section className="border-t border-lube-ink/5 py-14 md:py-20">
+      <section className="relative -mt-1.5 overflow-hidden bg-lube-foam py-14 pb-20 md:py-20 md:pb-24">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -top-1 z-[1] h-3 bg-lube-foam"
+        />
         <div className="lube-shell mx-auto max-w-2xl">
           <Reveal>
             <h2 className="font-display text-center text-3xl text-lube-ink md:text-4xl">
@@ -115,6 +111,7 @@ export default function ContatoPage() {
             </div>
           </Reveal>
         </div>
+        <SectionEdge fillClassName="text-lube-footer" />
       </section>
     </main>
   );

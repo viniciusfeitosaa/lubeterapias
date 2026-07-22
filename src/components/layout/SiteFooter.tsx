@@ -17,7 +17,12 @@ export function SiteFooter() {
   const site = getSite();
 
   return (
-    <footer className="mt-auto bg-[linear-gradient(165deg,var(--lube-deep)_0%,#184455_48%,var(--lube-teal-deep)_100%)] text-white">
+    <footer className="relative z-10 mt-auto bg-[linear-gradient(180deg,var(--lube-footer)_0%,var(--lube-deep)_62%,#0c222c_100%)] text-white">
+      {/* Cobre o vão de 1px entre a onda e o footer (visível no mobile) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 -top-1 h-2 bg-lube-footer"
+      />
       <div className="lube-shell grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-3">
         <div>
           <Logo variant="light" />

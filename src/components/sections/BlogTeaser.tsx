@@ -12,7 +12,11 @@ export async function BlogTeaser() {
   const featured = posts.slice(0, 3);
 
   return (
-    <section className="relative overflow-hidden py-20 pb-24 md:py-28 md:pb-32">
+    <section className="relative -mt-1.5 overflow-hidden bg-lube-mist py-20 pb-24 md:py-28 md:pb-32">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 -top-1 z-[1] h-3 bg-lube-mist"
+      />
       <SectionToys section="blog-teaser" />
       <div className="lube-shell pointer-events-none relative z-10">
         <div className="pointer-events-auto">
@@ -57,7 +61,7 @@ export async function BlogTeaser() {
         )}
         </div>
       </div>
-      <SectionEdge variant="soft" />
+      <SectionEdge variant="soft" fillClassName="text-lube-foam" />
     </section>
   );
 }

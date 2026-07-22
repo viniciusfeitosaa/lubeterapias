@@ -14,6 +14,7 @@
   --lube-mist: #eef6f9;
   --lube-foam: #ffffff;
   --lube-deep: #0f2a36;
+  --lube-footer: #184455;
   --lube-wa: #2bb673;
   --lube-wa-deep: #1a9a5c;
   --lube-wa-glow: #7ed9a8;
@@ -42,6 +43,7 @@
   --color-lube-mist: var(--lube-mist);
   --color-lube-foam: var(--lube-foam);
   --color-lube-deep: var(--lube-deep);
+  --color-lube-footer: var(--lube-footer);
   --color-lube-wa: var(--lube-wa);
   --color-lube-wa-deep: var(--lube-wa-deep);
   --color-lube-wa-glow: var(--lube-wa-glow);
@@ -305,21 +307,24 @@ img {
   opacity: 0.86;
 }
 
+.toy-slot-flow {
+  position: relative;
+  opacity: 0.92;
+}
+
 @media (max-width: 767px) {
   .toy-slot-hero-left {
     left: 2%;
     bottom: 12%;
+    opacity: 0.55;
   }
 
   .toy-slot-hero-right {
     display: none;
   }
 
-  .toy-slot-section-tr {
-    right: 0.25rem;
-    top: 5.25rem;
-  }
-
+  /* Props absolutos cobrem o título no mobile — só desktop */
+  .toy-slot-section-tr,
   .toy-slot-section-bl,
   .toy-slot-section-edge {
     display: none;

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/ui/PageHero";
+import { SectionEdge } from "@/components/ui/SectionEdge";
 import { getPublishedPostBySlug, listPublishedPosts } from "@/lib/blog";
 import { markdownToHtml } from "@/lib/markdown";
 
@@ -49,34 +50,41 @@ export default async function BlogPostPage({ params }: Props) {
         ) : null}
       </PageHero>
 
-      <article className="lube-shell max-w-3xl space-y-8 py-14 md:py-20">
-        {post.cover_url ? (
-          <div className="relative aspect-[16/9] overflow-hidden rounded-[1.5rem] border border-lube-ink/8 shadow-[var(--shadow-soft)]">
-            <Image
-              src={post.cover_url}
-              alt=""
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 768px"
-              priority
-            />
-          </div>
-        ) : null}
-
+      <section className="relative -mt-1.5 overflow-hidden bg-lube-mist py-14 pb-20 md:py-20 md:pb-24">
         <div
-          className="blog-prose lube-card space-y-4 p-6 text-lube-ink-soft leading-relaxed md:p-10 [&_a]:font-semibold [&_a]:text-lube-teal [&_a]:underline-offset-2 hover:[&_a]:underline [&_h2]:font-display [&_h2]:text-2xl [&_h2]:text-lube-ink [&_h3]:font-display [&_h3]:text-xl [&_h3]:text-lube-ink [&_li]:ml-5 [&_li]:list-disc [&_p]:text-base [&_strong]:text-lube-ink"
-          dangerouslySetInnerHTML={{ __html: html }}
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -top-1 z-[1] h-3 bg-lube-mist"
         />
+        <article className="lube-shell max-w-3xl space-y-8">
+          {post.cover_url ? (
+            <div className="relative aspect-[16/9] overflow-hidden rounded-[1.5rem] border border-lube-ink/8 shadow-[var(--shadow-soft)]">
+              <Image
+                src={post.cover_url}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 768px"
+                priority
+              />
+            </div>
+          ) : null}
 
-        <p>
-          <Link
-            href="/blog"
-            className="text-sm font-bold text-lube-teal underline-offset-4 hover:underline"
-          >
-            ← Voltar ao blog
-          </Link>
-        </p>
-      </article>
+          <div
+            className="blog-prose lube-card space-y-4 p-6 text-lube-ink-soft leading-relaxed md:p-10 [&_a]:font-semibold [&_a]:text-lube-teal [&_a]:underline-offset-2 hover:[&_a]:underline [&_h2]:font-display [&_h2]:text-2xl [&_h2]:text-lube-ink [&_h3]:font-display [&_h3]:text-xl [&_h3]:text-lube-ink [&_li]:ml-5 [&_li]:list-disc [&_p]:text-base [&_strong]:text-lube-ink"
+            dangerouslySetInnerHTML={{ __html: html }}
+          />
+
+          <p>
+            <Link
+              href="/blog"
+              className="text-sm font-bold text-lube-teal underline-offset-4 hover:underline"
+            >
+              ← Voltar ao blog
+            </Link>
+          </p>
+        </article>
+        <SectionEdge fillClassName="text-lube-footer" />
+      </section>
     </main>
   );
 }

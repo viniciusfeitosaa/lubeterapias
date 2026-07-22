@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { SectionToys } from "@/components/toys/SectionToys";
+import { ToyProp } from "@/components/toys/ToyProp";
 import { Button } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionEdge } from "@/components/ui/SectionEdge";
@@ -11,7 +12,11 @@ export function AboutTeaser() {
   const site = getSite();
 
   return (
-    <section className="relative overflow-hidden py-20 pb-24 md:py-28 md:pb-32">
+    <section className="relative -mt-1.5 overflow-hidden bg-lube-mist py-20 pb-24 md:py-28 md:pb-32">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 -top-1 z-[1] h-3 bg-lube-mist"
+      />
       <SectionToys section="sobre" />
       <div className="pointer-events-none absolute -left-24 top-10 h-72 w-72 rounded-full bg-lube-sky/25 blur-3xl" />
       <div className="lube-shell pointer-events-none relative z-10 grid items-center gap-10 md:grid-cols-2">
@@ -38,10 +43,13 @@ export function AboutTeaser() {
             <Button href="/sobre" variant="ghost">
               Leia mais sobre a Casa LuBe
             </Button>
+            <div className="mt-6">
+              <ToyProp id="nuvem" placement="flow" size="md" />
+            </div>
           </div>
         </Reveal>
       </div>
-      <SectionEdge flip variant="soft" />
+      <SectionEdge flip variant="soft" fillClassName="text-lube-foam" />
     </section>
   );
 }

@@ -13,7 +13,11 @@ export function UnitsSection() {
   const unit = site.units[0];
 
   return (
-    <section className="relative overflow-hidden py-20 pb-24 md:py-28 md:pb-32">
+    <section className="relative -mt-1.5 overflow-hidden bg-lube-mist py-20 pb-24 md:py-28 md:pb-32">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 -top-1 z-[1] h-3 bg-lube-mist"
+      />
       <SectionToys section="unidades" />
       <div className="lube-shell relative">
         <Reveal>
@@ -64,7 +68,7 @@ export function UnitsSection() {
           </article>
         </Reveal>
       </div>
-      <SectionEdge flip />
+      <SectionEdge flip fillClassName="text-lube-foam" />
     </section>
   );
 }

@@ -28,6 +28,7 @@ const PLACEMENT_CLASS: Record<ToyPlacement, string> = {
   "section-tr": "toy-slot-section-tr",
   "section-bl": "toy-slot-section-bl",
   "section-edge": "toy-slot-section-edge",
+  flow: "toy-slot-flow",
 };
 
 type ToyPropProps = {

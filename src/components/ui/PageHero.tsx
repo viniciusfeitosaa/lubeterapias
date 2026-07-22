@@ -57,7 +57,7 @@ export function PageHero({
         </div>
       </div>
 
-      <SectionEdge />
+      <SectionEdge fillClassName="text-lube-mist" />
     </section>
   );
 }

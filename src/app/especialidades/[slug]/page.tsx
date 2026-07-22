@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 import { PageHero } from "@/components/ui/PageHero";
+import { SectionEdge } from "@/components/ui/SectionEdge";
 import {
   getEspecialidade,
   getEspecialidades,
@@ -48,33 +49,40 @@ export default async function EspecialidadePage({ params }: Props) {
         toys="especialidades"
       />
 
-      <section className="lube-shell max-w-3xl space-y-6 py-14 md:py-20">
-        <div className="relative aspect-[16/9] overflow-hidden rounded-[1.5rem] border border-lube-ink/8 shadow-[var(--shadow-soft)]">
-          <Image
-            src={img.src}
-            alt={img.alt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 768px"
-            priority
-          />
-        </div>
+      <section className="relative -mt-1.5 overflow-hidden bg-lube-mist py-14 pb-20 md:py-20 md:pb-24">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -top-1 z-[1] h-3 bg-lube-mist"
+        />
+        <div className="lube-shell max-w-3xl space-y-6">
+          <div className="relative aspect-[16/9] overflow-hidden rounded-[1.5rem] border border-lube-ink/8 shadow-[var(--shadow-soft)]">
+            <Image
+              src={img.src}
+              alt={img.alt}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 768px"
+              priority
+            />
+          </div>
 
-        <div className="lube-card p-6 md:p-8">
-          <p className="leading-relaxed text-lube-ink-soft">
-            Na Casa LuBe, cada atendimento é personalizado pela nossa equipe
-            multidisciplinar, em ambientes lúdicos e seguros. Fale conosco para
-            entender o melhor caminho para sua família.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button href={wa} external variant="wa">
-              Falar no WhatsApp
-            </Button>
-            <Button href="/contato" variant="secondary">
-              Ir para contato
-            </Button>
+          <div className="lube-card p-6 md:p-8">
+            <p className="leading-relaxed text-lube-ink-soft">
+              Na Casa LuBe, cada atendimento é personalizado pela nossa equipe
+              multidisciplinar, em ambientes lúdicos e seguros. Fale conosco
+              para entender o melhor caminho para sua família.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button href={wa} external variant="wa">
+                Falar no WhatsApp
+              </Button>
+              <Button href="/contato" variant="secondary">
+                Ir para contato
+              </Button>
+            </div>
           </div>
         </div>
+        <SectionEdge fillClassName="text-lube-footer" />
       </section>
     </main>
   );

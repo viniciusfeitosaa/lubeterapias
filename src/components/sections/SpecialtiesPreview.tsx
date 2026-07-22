@@ -13,7 +13,11 @@ export function SpecialtiesPreview() {
     .slice(0, 6);
 
   return (
-    <section className="relative overflow-hidden py-20 pb-24 md:py-28 md:pb-32">
+    <section className="relative -mt-1.5 overflow-hidden bg-lube-foam py-20 pb-24 md:py-28 md:pb-32">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 -top-1 z-[1] h-3 bg-lube-foam"
+      />
       <SectionToys section="especialidades-preview" />
       <div className="lube-shell pointer-events-none relative z-10">
         <div className="pointer-events-auto">
@@ -71,7 +75,7 @@ export function SpecialtiesPreview() {
         </div>
         </div>
       </div>
-      <SectionEdge flip />
+      <SectionEdge flip fillClassName="text-lube-mist" />
     </section>
   );
 }

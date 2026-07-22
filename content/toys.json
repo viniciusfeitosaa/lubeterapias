@@ -71,12 +71,9 @@
     },
     "sobre": {
       "desktop": [
-        { "id": "nuvem", "placement": "section-tr", "size": "lg" },
         { "id": "quebra", "placement": "section-bl", "size": "sm" }
       ],
-      "mobile": [
-        { "id": "nuvem", "placement": "section-tr", "size": "sm" }
-      ]
+      "mobile": []
     },
     "unidades": {
       "desktop": [
@@ -125,7 +122,7 @@
     "quem-somos": {
       "desktop": [
         { "id": "casinha", "placement": "section-tr", "size": "lg" },
-        { "id": "bolinha", "placement": "section-bl", "size": "md" }
+        { "id": "bolinha", "placement": "section-bl", "size": "sm" }
       ],
       "mobile": [
         { "id": "casinha", "placement": "section-tr", "size": "sm" }

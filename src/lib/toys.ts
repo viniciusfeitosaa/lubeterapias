@@ -7,7 +7,8 @@ export type ToyPlacement =
   | "hero-right"
   | "section-tr"
   | "section-bl"
-  | "section-edge";
+  | "section-edge"
+  | "flow";
 export type ToySectionId = keyof typeof toys.sections;
 export type ToyViewport = "desktop" | "mobile";
 

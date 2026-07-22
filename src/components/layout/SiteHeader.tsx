@@ -65,7 +65,7 @@ export function SiteHeader() {
                 <span className="relative z-10">{item.label}</span>
                 <span
                   aria-hidden
-                  className={`pointer-events-none absolute inset-x-3 -bottom-0.5 h-[3px] origin-left rounded-full bg-[linear-gradient(90deg,var(--lube-teal),var(--lube-sky),var(--lube-sun))] shadow-[0_1px_0_rgba(255,255,255,0.65)_inset] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                  className={`pointer-events-none absolute inset-x-3 -bottom-0.5 h-[3px] origin-left rounded-full bg-lube-teal transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
                     active
                       ? "scale-x-100"
                       : "scale-x-0 group-hover:scale-x-75 group-hover:opacity-70"
@@ -136,7 +136,7 @@ export function SiteHeader() {
                   {active ? (
                     <span
                       aria-hidden
-                      className="absolute top-1/2 left-0 h-5 w-[3px] -translate-y-1/2 rounded-full bg-[linear-gradient(180deg,var(--lube-teal),var(--lube-sky))]"
+                      className="absolute top-1/2 left-0 h-5 w-[3px] -translate-y-1/2 rounded-full bg-lube-teal"
                     />
                   ) : null}
                   {item.label}

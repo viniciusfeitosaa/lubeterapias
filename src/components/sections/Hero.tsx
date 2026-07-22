@@ -100,7 +100,7 @@ export function Hero() {
           </Button>
         </motion.div>
       </div>
-      <SectionEdge />
+      <SectionEdge fillClassName="text-lube-mist" />
     </section>
   );
 }
