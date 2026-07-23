@@ -25,15 +25,21 @@ export default async function AdminPostsPage() {
     loadError =
       err instanceof Error
         ? err.message
-        : "Não foi possível carregar os posts. Confira o Supabase.";
+        : "Não foi possível carregar os posts.";
   }
 
   return (
     <AdminShell title="Publicações">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-lube-ink-soft">
-          {posts.length} post{posts.length === 1 ? "" : "s"}
-        </p>
+        <div>
+          <p className="text-sm text-lube-ink-soft">
+            {posts.length} post{posts.length === 1 ? "" : "s"}
+          </p>
+          <p className="mt-1 text-xs text-lube-ink-soft">
+            Em produção, alterações entram no ar após o deploy do Netlify
+            (cerca de 1–2 min).
+          </p>
+        </div>
         <Link
           href="/admin/posts/new"
           className="lube-btn-primary inline-flex min-h-11 items-center justify-center rounded-2xl px-5 py-3 text-sm font-bold tracking-wide hover:bg-lube-teal-deep"

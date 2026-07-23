@@ -1,5 +1,12 @@
 [
   {
+    "id": "cinthya-viana",
+    "name": "Cinthya Viana",
+    "role": "Diretora - Sócia",
+    "photo": "/images/equipe/cinthya-viana.png",
+    "photoAlt": "Cinthya Viana, diretora e sócia da Casa LuBe"
+  },
+  {
     "id": "cristiane-sanches",
     "name": "Cristiane Sanches",
     "role": "Terapeuta Ocupacional",

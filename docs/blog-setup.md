@@ -1,32 +1,41 @@
 # Blog + admin Casa LuBe
 
-## 1. Supabase
+O painel usa **e-mail e senha** (NextAuth). Os posts ficam no repositório (`content/blog/posts.json`); capas em `public/images/blog/`. Em produção, o admin grava via **GitHub API** e o Netlify republica o site.
 
-1. Crie um projeto em [supabase.com](https://supabase.com).
-2. No **SQL Editor**, execute o conteúdo de [`supabase/schema.sql`](../supabase/schema.sql).
-3. Em **Storage**, confirme o bucket `blog` (público).
-4. Em **Project Settings → API**, copie:
-   - Project URL → `NEXT_PUBLIC_SUPABASE_URL`
-   - `anon` `public` → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
-   - `service_role` → `SUPABASE_SERVICE_ROLE_KEY` (nunca no client)
-
-## 2. Variáveis de ambiente
+## 1. Credenciais do admin
 
 ```bash
 cp .env.example .env.local
 ```
 
-Gere segredos:
-
 ```bash
 # AUTH_SECRET
 openssl rand -base64 32
 
-# Hash da senha do admin
-node scripts/hash-password.mjs "sua-senha-forte"
+# Hash da senha
+npm run hash-password -- "sua-senha-forte"
 ```
 
-Preencha `ADMIN_EMAIL`, `ADMIN_PASSWORD_HASH` e as chaves Supabase em `.env.local`.
+Preencha:
+
+- `AUTH_SECRET`
+- `AUTH_URL` (local: `http://localhost:3000`; produção: URL do site)
+- `ADMIN_EMAIL`
+- `ADMIN_PASSWORD_HASH`
+
+## 2. GitHub (produção / Netlify)
+
+1. Crie um [Personal Access Token](https://github.com/settings/tokens) (classic) com escopo `repo`, **ou** fine-grained com leitura/escrita de Contents no repositório.
+2. No Netlify (Site settings → Environment variables), defina:
+
+| Variável | Exemplo |
+|---|---|
+| `GITHUB_TOKEN` | `ghp_…` |
+| `GITHUB_REPO` | `viniciusfeitosaa/lubeterapias` |
+| `GITHUB_BRANCH` | `main` |
+| + as de auth acima | |
+
+**Dev local:** sem `GITHUB_TOKEN`, o painel grava direto nos arquivos do projeto (ótimo para testar).
 
 ## 3. Rodar
 
@@ -37,6 +46,13 @@ npm run dev
 - Blog público: `/blog`
 - Admin: `/admin/login`
 
-## 4. Deploy (Vercel)
+## 4. Fluxo de publicação
 
-Defina as mesmas variáveis no painel da Vercel. `AUTH_URL` deve ser a URL pública do site.
+1. Login no painel
+2. Criar/editar post (opcional: upload de capa)
+3. O commit vai para o GitHub
+4. Netlify faz o build (cerca de 1–2 min) e o post aparece no site
+
+## 5. Removido
+
+Supabase não é mais necessário para o blog.

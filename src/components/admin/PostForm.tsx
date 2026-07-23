@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
-import { slugify } from "@/lib/blog";
+import { slugify } from "@/lib/blog-shared";
 
 type PostFormProps = {
   mode: "create" | "edit";
@@ -216,6 +216,10 @@ export function PostForm({ mode, postId, initial }: PostFormProps) {
           >
             {saving ? "Salvando…" : mode === "create" ? "Criar post" : "Salvar"}
           </button>
+          <p className="text-xs leading-relaxed text-lube-ink-soft">
+            Em produção, o post é commitado no GitHub e aparece no site após o
+            deploy (cerca de 1–2 min).
+          </p>
         </div>
       </div>
     </form>

@@ -1,55 +1,108 @@
-import { z } from "zod";
+import "server-only";
+
+import { promises as fs } from "fs";
+import path from "path";
+import { randomUUID } from "crypto";
+import type { PostInput, PostRow } from "@/lib/blog-shared";
 import {
-  createSupabaseAdmin,
-  createSupabaseAnon,
-  isSupabaseConfigured,
-  type PostRow,
-} from "@/lib/supabase/server";
+  deleteRepoFile,
+  getRepoTextFile,
+  isGitHubConfigured,
+  putRepoBinaryFile,
+  putRepoTextFile,
+} from "@/lib/github-content";
 
-export type { PostRow };
+export type { PostRow, PostInput } from "@/lib/blog-shared";
+export { postInputSchema, slugify } from "@/lib/blog-shared";
 
-export const postInputSchema = z.object({
-  title: z.string().min(1, "Título obrigatório").max(200),
-  slug: z
-    .string()
-    .min(1)
-    .max(200)
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Slug inválido (use minúsculas e hífens)"),
-  excerpt: z.string().max(500).optional().default(""),
-  body: z.string().optional().default(""),
-  cover_url: z
-    .union([z.string().url(), z.literal(""), z.null()])
-    .optional()
-    .transform((v) => (v === "" || v === undefined ? null : v)),
-  published: z.boolean().optional().default(false),
-});
+const POSTS_RELATIVE = "content/blog/posts.json";
+const POSTS_ABSOLUTE = path.join(process.cwd(), POSTS_RELATIVE);
+const BLOG_IMAGES_DIR = path.join(process.cwd(), "public", "images", "blog");
 
-export type PostInput = z.infer<typeof postInputSchema>;
+function sortByUpdatedDesc(posts: PostRow[]): PostRow[] {
+  return [...posts].sort(
+    (a, b) =>
+      new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime(),
+  );
+}
 
-export function slugify(title: string): string {
-  return title
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 180);
+function sortPublished(posts: PostRow[]): PostRow[] {
+  return [...posts].sort((a, b) => {
+    const da = a.published_at ? new Date(a.published_at).getTime() : 0;
+    const db = b.published_at ? new Date(b.published_at).getTime() : 0;
+    return db - da;
+  });
+}
+
+async function readPostsFromDisk(): Promise<PostRow[]> {
+  try {
+    const raw = await fs.readFile(POSTS_ABSOLUTE, "utf8");
+    const data = JSON.parse(raw) as unknown;
+    if (!Array.isArray(data)) return [];
+    return data as PostRow[];
+  } catch (err) {
+    const code = (err as NodeJS.ErrnoException).code;
+    if (code === "ENOENT") return [];
+    throw err;
+  }
+}
+
+async function readPostsFromGitHub(): Promise<PostRow[]> {
+  const file = await getRepoTextFile(POSTS_RELATIVE);
+  if (!file) return [];
+  const data = JSON.parse(file.content) as unknown;
+  if (!Array.isArray(data)) return [];
+  return data as PostRow[];
+}
+
+async function readAllPostsForAdmin(): Promise<PostRow[]> {
+  if (isGitHubConfigured()) {
+    try {
+      return await readPostsFromGitHub();
+    } catch (err) {
+      console.error("readPostsFromGitHub", err);
+      return readPostsFromDisk();
+    }
+  }
+  return readPostsFromDisk();
+}
+
+async function writePosts(posts: PostRow[], message: string): Promise<void> {
+  const payload = `${JSON.stringify(posts, null, 2)}\n`;
+
+  if (isGitHubConfigured()) {
+    await putRepoTextFile(POSTS_RELATIVE, payload, message);
+    // Espelha no disco local quando possível (dev / build local).
+    try {
+      await fs.mkdir(path.dirname(POSTS_ABSOLUTE), { recursive: true });
+      await fs.writeFile(POSTS_ABSOLUTE, payload, "utf8");
+    } catch {
+      /* Netlify/funções serverless podem ser read-only */
+    }
+    return;
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    throw new Error(
+      "GITHUB_TOKEN/GITHUB_REPO não configurados. Sem isso o painel não grava em produção.",
+    );
+  }
+
+  await fs.mkdir(path.dirname(POSTS_ABSOLUTE), { recursive: true });
+  await fs.writeFile(POSTS_ABSOLUTE, payload, "utf8");
+}
+
+function assertUniqueSlug(posts: PostRow[], slug: string, exceptId?: string) {
+  const clash = posts.find((p) => p.slug === slug && p.id !== exceptId);
+  if (clash) {
+    throw new Error(`Já existe um post com o slug "${slug}"`);
+  }
 }
 
 export async function listPublishedPosts(): Promise<PostRow[]> {
-  if (!isSupabaseConfigured()) return [];
   try {
-    const supabase = createSupabaseAnon();
-    const { data, error } = await supabase
-      .from("posts")
-      .select("*")
-      .eq("published", true)
-      .order("published_at", { ascending: false, nullsFirst: false });
-    if (error) {
-      console.error("listPublishedPosts", error.message);
-      return [];
-    }
-    return (data ?? []) as PostRow[];
+    const posts = await readPostsFromDisk();
+    return sortPublished(posts.filter((p) => p.published));
   } catch (err) {
     console.error("listPublishedPosts", err);
     return [];
@@ -59,20 +112,9 @@ export async function listPublishedPosts(): Promise<PostRow[]> {
 export async function getPublishedPostBySlug(
   slug: string,
 ): Promise<PostRow | null> {
-  if (!isSupabaseConfigured()) return null;
   try {
-    const supabase = createSupabaseAnon();
-    const { data, error } = await supabase
-      .from("posts")
-      .select("*")
-      .eq("slug", slug)
-      .eq("published", true)
-      .maybeSingle();
-    if (error) {
-      console.error("getPublishedPostBySlug", error.message);
-      return null;
-    }
-    return data as PostRow | null;
+    const posts = await readPostsFromDisk();
+    return posts.find((p) => p.slug === slug && p.published) ?? null;
   } catch (err) {
     console.error("getPublishedPostBySlug", err);
     return null;
@@ -80,55 +122,50 @@ export async function getPublishedPostBySlug(
 }
 
 export async function listAllPosts(): Promise<PostRow[]> {
-  const supabase = createSupabaseAdmin();
-  const { data, error } = await supabase
-    .from("posts")
-    .select("*")
-    .order("updated_at", { ascending: false });
-  if (error) throw new Error(error.message);
-  return (data ?? []) as PostRow[];
+  const posts = await readAllPostsForAdmin();
+  return sortByUpdatedDesc(posts);
 }
 
 export async function getPostById(id: string): Promise<PostRow | null> {
-  const supabase = createSupabaseAdmin();
-  const { data, error } = await supabase
-    .from("posts")
-    .select("*")
-    .eq("id", id)
-    .maybeSingle();
-  if (error) throw new Error(error.message);
-  return data as PostRow | null;
+  const posts = await readAllPostsForAdmin();
+  return posts.find((p) => p.id === id) ?? null;
 }
 
 export async function createPost(input: PostInput): Promise<PostRow> {
-  const supabase = createSupabaseAdmin();
+  const posts = await readAllPostsForAdmin();
+  assertUniqueSlug(posts, input.slug);
+
+  const now = new Date().toISOString();
   const cover =
     input.cover_url && input.cover_url.length > 0 ? input.cover_url : null;
-  const { data, error } = await supabase
-    .from("posts")
-    .insert({
-      title: input.title,
-      slug: input.slug,
-      excerpt: input.excerpt ?? "",
-      body: input.body ?? "",
-      cover_url: cover,
-      published: input.published,
-      published_at: input.published ? new Date().toISOString() : null,
-    })
-    .select("*")
-    .single();
-  if (error) throw new Error(error.message);
-  return data as PostRow;
+
+  const post: PostRow = {
+    id: randomUUID(),
+    title: input.title,
+    slug: input.slug,
+    excerpt: input.excerpt ?? "",
+    body: input.body ?? "",
+    cover_url: cover,
+    published: Boolean(input.published),
+    published_at: input.published ? now : null,
+    created_at: now,
+    updated_at: now,
+  };
+
+  await writePosts([post, ...posts], `blog: cria post "${post.title}"`);
+  return post;
 }
 
 export async function updatePost(
   id: string,
   input: PostInput,
 ): Promise<PostRow> {
-  const supabase = createSupabaseAdmin();
-  const existing = await getPostById(id);
-  if (!existing) throw new Error("Post não encontrado");
+  const posts = await readAllPostsForAdmin();
+  const index = posts.findIndex((p) => p.id === id);
+  if (index < 0) throw new Error("Post não encontrado");
 
+  assertUniqueSlug(posts, input.slug, id);
+  const existing = posts[index];
   const cover =
     input.cover_url && input.cover_url.length > 0 ? input.cover_url : null;
 
@@ -140,44 +177,85 @@ export async function updatePost(
     published_at = null;
   }
 
-  const { data, error } = await supabase
-    .from("posts")
-    .update({
-      title: input.title,
-      slug: input.slug,
-      excerpt: input.excerpt ?? "",
-      body: input.body ?? "",
-      cover_url: cover,
-      published: input.published,
-      published_at,
-    })
-    .eq("id", id)
-    .select("*")
-    .single();
-  if (error) throw new Error(error.message);
-  return data as PostRow;
+  const updated: PostRow = {
+    ...existing,
+    title: input.title,
+    slug: input.slug,
+    excerpt: input.excerpt ?? "",
+    body: input.body ?? "",
+    cover_url: cover,
+    published: Boolean(input.published),
+    published_at,
+    updated_at: new Date().toISOString(),
+  };
+
+  const next = [...posts];
+  next[index] = updated;
+  await writePosts(next, `blog: atualiza post "${updated.title}"`);
+  return updated;
 }
 
 export async function deletePost(id: string): Promise<void> {
-  const supabase = createSupabaseAdmin();
-  const { error } = await supabase.from("posts").delete().eq("id", id);
-  if (error) throw new Error(error.message);
+  const posts = await readAllPostsForAdmin();
+  const existing = posts.find((p) => p.id === id);
+  if (!existing) throw new Error("Post não encontrado");
+
+  const next = posts.filter((p) => p.id !== id);
+  await writePosts(next, `blog: remove post "${existing.title}"`);
+
+  // Remove capa local do repo se for path interno.
+  if (existing.cover_url?.startsWith("/images/blog/")) {
+    const rel = `public${existing.cover_url}`;
+    if (isGitHubConfigured()) {
+      try {
+        await deleteRepoFile(rel, `blog: remove capa de "${existing.title}"`);
+      } catch (err) {
+        console.error("delete cover", err);
+      }
+    } else {
+      try {
+        await fs.unlink(path.join(process.cwd(), rel));
+      } catch {
+        /* ignore */
+      }
+    }
+  }
 }
 
 export async function uploadBlogImage(
   file: File,
 ): Promise<{ url: string; path: string }> {
-  const supabase = createSupabaseAdmin();
   const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
-  const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const safeExt = ["jpg", "jpeg", "png", "webp", "gif"].includes(ext)
+    ? ext
+    : "jpg";
+  const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${safeExt}`;
+  const relativePath = `public/images/blog/${filename}`;
+  const publicUrl = `/images/blog/${filename}`;
   const buffer = Buffer.from(await file.arrayBuffer());
 
-  const { error } = await supabase.storage.from("blog").upload(path, buffer, {
-    contentType: file.type || "image/jpeg",
-    upsert: false,
-  });
-  if (error) throw new Error(error.message);
+  if (isGitHubConfigured()) {
+    await putRepoBinaryFile(
+      relativePath,
+      buffer,
+      `blog: upload capa ${filename}`,
+    );
+    try {
+      await fs.mkdir(BLOG_IMAGES_DIR, { recursive: true });
+      await fs.writeFile(path.join(BLOG_IMAGES_DIR, filename), buffer);
+    } catch {
+      /* read-only FS */
+    }
+    return { url: publicUrl, path: relativePath };
+  }
 
-  const { data } = supabase.storage.from("blog").getPublicUrl(path);
-  return { url: data.publicUrl, path };
+  if (process.env.NODE_ENV === "production") {
+    throw new Error(
+      "GITHUB_TOKEN/GITHUB_REPO não configurados. Sem isso o upload não funciona em produção.",
+    );
+  }
+
+  await fs.mkdir(BLOG_IMAGES_DIR, { recursive: true });
+  await fs.writeFile(path.join(BLOG_IMAGES_DIR, filename), buffer);
+  return { url: publicUrl, path: relativePath };
 }

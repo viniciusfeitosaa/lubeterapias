@@ -10,7 +10,6 @@
     "hash-password": "node scripts/hash-password.mjs"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.110.7",
     "bcryptjs": "^3.0.3",
     "framer-motion": "^12.42.2",
     "next": "16.2.10",
@@ -20,6 +19,7 @@
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
     "remark-html": "^16.0.1",
+    "server-only": "^0.0.1",
     "unified": "^11.0.5",
     "zod": "^4.4.3"
   },
