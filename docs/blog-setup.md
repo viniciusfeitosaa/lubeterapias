@@ -28,14 +28,28 @@ Preencha:
 1. Crie um [Personal Access Token](https://github.com/settings/tokens) (classic) com escopo `repo`, **ou** fine-grained com leitura/escrita de Contents no repositório.
 2. No Netlify (Site settings → Environment variables), defina:
 
-| Variável | Exemplo |
+| Variável | Exemplo / nota |
 |---|---|
+| `AUTH_SECRET` | mesmo do `.env` local |
+| `AUTH_URL` | URL pública **https://…** (sem barra no final) |
+| `ADMIN_EMAIL` | `admin@lubeterapia.com.br` |
+| `ADMIN_PASSWORD_HASH_B64` | hash em Base64 (ver abaixo) — **não** use o hash com `$` cru |
 | `GITHUB_TOKEN` | `ghp_…` |
 | `GITHUB_REPO` | `viniciusfeitosaa/lubeterapias` |
 | `GITHUB_BRANCH` | `main` |
-| + as de auth acima | |
 
-**Dev local:** sem `GITHUB_TOKEN`, o painel grava direto nos arquivos do projeto (ótimo para testar).
+### Por que Base64 no Netlify?
+
+O Netlify interpreta `$…` nas variáveis de ambiente e **quebra** o hash bcrypt (`$2b$12$…`).  
+Gere o Base64 a partir do hash real:
+
+```bash
+node -e "console.log(Buffer.from(process.argv[1]).toString('base64'))" "$2b$12$SEU_HASH_AQUI"
+```
+
+Depois de salvar as variáveis, faça **Clear cache and deploy site**.
+
+**Dev local:** use `ADMIN_PASSWORD_HASH` com `\$` no `.env`. Sem `GITHUB_TOKEN`, o painel grava nos arquivos locais.
 
 ## 3. Rodar
 
